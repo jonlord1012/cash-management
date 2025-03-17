@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /rbj-acc/public/
+    
+    # Allow access to AdminLTE assets
+    RewriteCond %{REQUEST_URI} ^/(admin|uploads) [NC]
+    RewriteRule ^ - [L]
+
+    # Redirect to front controller
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
