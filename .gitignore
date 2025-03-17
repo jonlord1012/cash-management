@@ -3,7 +3,7 @@
 #-------------------------
 
 # local config 
-/app/Config/Database.php
+app/Config/Database.php
 
 # OS X
 .DS_Store
