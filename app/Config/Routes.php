@@ -41,3 +41,8 @@ $routes->group('reports', ['filter' => 'auth'], function ($routes) {
    $routes->get('branch', 'Reports::branchReport');
    $routes->get('consolidated', 'Reports::consolidatedReport');
 });
+
+$routes->group('transaction', ['filter' => 'auth'], function ($routes) {
+   $routes->get('transaction', 'Transaction::viewTransaction');
+   $routes->post('transaction/save', 'Transaction::save');
+});
