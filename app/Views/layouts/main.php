@@ -9,9 +9,26 @@
    <!-- admin -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/fontawesome-free/css/all.min.css') ?>">
    <link rel="stylesheet" href="<?= base_url('admin/dist/css/adminlte.min.css') ?>">
+   <!-- jquery-ui -->
+   <link rel="stylesheet" href="<?= base_url('admin/plugins/jquery-ui/jquery-ui.css') ?>">
    <!-- jsTree -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jstree/themes/default/style.min.css') ?>">
-
+   <style>
+   .ui-autocomplete {
+      position: absolute;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #ccc;
+      max-height: 200px;
+      overflow-y: auto;
+   }
+   </style>
+   <!-- Scripts -->
+   <script src="<?= base_url('admin/plugins/jquery/jquery.min.js') ?>"></script>
+   <script src="<?= base_url('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+   <script src="<?= base_url('admin/dist/js/adminlte.min.js') ?>"></script>
+   <script src="<?= base_url('admin/plugins/jstree/jstree.min.js') ?>"></script>
+   <script src="<?= base_url('admin/plugins/jquery-ui/jquery-ui.js') ?>"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -44,16 +61,15 @@
          </section>
       </div>
 
+
       <!-- Footer -->
       <?= $this->include('partials/footer') ?>
 
    </div>
 
-   <!-- Scripts -->
-   <script src="<?= base_url('admin/plugins/jquery/jquery.min.js') ?>"></script>
-   <script src="<?= base_url('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-   <script src="<?= base_url('admin/dist/js/adminlte.min.js') ?>"></script>
-   <script src="<?= base_url('admin/plugins/jstree/jstree.min.js') ?>"></script>
+
 </body>
 
+
 </html>
+<?= $this->renderSection('scripts') ?>

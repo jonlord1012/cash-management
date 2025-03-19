@@ -20,7 +20,7 @@ class Login extends BaseController
       $password = $this->request->getPost('password');
 
       if (service('auth')->login($username, $password)) {
-         return redirect()->to('/admin/coa');
+         return redirect()->to('/');
       }
 
       return redirect()->back()->withInput()->with('error', 'Invalid credentials');

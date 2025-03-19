@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /rbj-acc/public/
+    RewriteBase /cash-management/public/
     
     # Allow access to AdminLTE assets
     RewriteCond %{REQUEST_URI} ^/(admin|uploads) [NC]

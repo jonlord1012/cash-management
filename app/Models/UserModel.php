@@ -7,8 +7,27 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
    protected $table = 'users';
-   protected $allowedFields = ['username', 'password', 'user_group', 'branch_code'];
+
+   protected $primaryKey = 'id';
+   protected $useAutoIncrement = true;
+   protected $allowedFields = [
+      'id',
+      'username',
+      'password',
+      'user_group',
+      'branch_code',
+      'is_active'
+   ];
    protected $beforeInsert = ['hashPassword'];
+   protected $beforeUpdate = ['hashPassword'];
+
+   protected $validationRules = [
+      'id'          => 'permit_empty|is_natural_no_zero',
+      'username' => 'required|max_length[75]|is_unique[users.username,id,{id}]',
+      'user_group' => 'required|in_list[superadmin,ho_accountant,branch_accountant,auditor]',
+      'branch_code' => 'permit_empty|string|min_length[4]|max_length[15]',
+      'is_active' => 'permit_empty|in_list[0,1]'
+   ];
 
    protected function hashPassword(array $data)
    {
@@ -25,5 +44,12 @@ class UserModel extends Model
          return $user;
       }
       return false;
+   }
+
+   public function getUsersWithBranch()
+   {
+      return $this->select('users.*, branches.name as branch_name')
+         ->join('branches', 'branches.branch_code = users.branch_code', 'left')
+         ->findAll();
    }
 }

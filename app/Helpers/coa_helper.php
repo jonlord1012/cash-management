@@ -34,6 +34,27 @@ if (!function_exists('renderCoaTree')) {
    }
 }
 
+if (!function_exists('getCOANameByCode')) {
+   function getCOANameByCode($coaCode)
+   {
+      if ($coaCode === NULL) return false;
+
+      $coaModel = new \App\Models\CoaModel();
+      $coaName = $coaModel->where('account_code', $coaCode)->first();
+      return $coaName ? $coaName['account_name'] : 'N/A';
+   }
+}
+if (!function_exists('getSourceNameByCode')) {
+   function getSourceNameByCode($sourceCode)
+   {
+      if ($sourceCode === NULL) return false;
+
+      $sourceModel = new \App\Models\SourceModel();
+      $sourceName = $sourceModel->where('bank_code', $sourceCode)->first();
+      return $sourceName ? $sourceName['bank_name'] : 'N/A';
+   }
+}
+
 if (!function_exists('getCategoryColor')) {
    function getCategoryColor($category)
    {

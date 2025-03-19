@@ -14,7 +14,7 @@
             </li>
             <li class="nav-header">ACCOUNTING</li>
             <li class="nav-item">
-               <a href="<?= site_url('journal') ?>" class="nav-link">
+               <a href="<?= site_url('accounting/transaction') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Journal Entries</p>
                </a>
@@ -60,6 +60,43 @@
                <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Hutang Bank</p>
+               </a>
+            </li>
+            <!-- END REPORTS -->
+
+            <!-- COMPANY -->
+            <li class="nav-header">COMPANY</li>
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/branches/') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Branches</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/coa') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>COA</p>
+               </a>
+            </li>
+            <!-- END COMPANY -->
+            <!-- SYSTEM -->
+            <li class="nav-header">SYSTEM</li>
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/users/') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>User Management</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/audit-logs/') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Audit Logs</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('logout') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>LogOut</p>
                </a>
             </li>
          </ul>

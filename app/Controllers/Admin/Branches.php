@@ -38,10 +38,13 @@ class Branches extends BaseController
 
    public function save()
    {
+
+      log_message('debug', 'Save method called with data: ' . print_r($this->request->getPost(), true));
+
       $validation = $this->validate([
-         'branch_code' => 'required|exact_length[15]|is_unique[branches.branch_code]',
+         'branch_code' => 'required|min_length[4]|max_length[15]|is_unique[branches.branch_code]',
          'name' => 'required|max_length[255]',
-         'is_head_office' => 'permit_empty|in_list[0,1]'
+
       ]);
 
       if (!$validation) {

@@ -47,11 +47,19 @@ class Auth
       if ($userGroup === 'superadmin') {
          return true;
       }
+      // Check against permissions map
+      $allowedRoutes = $config->permissions[$userGroup] ?? [];
 
+      foreach ($allowedRoutes as $allowedRoute) {
+         if (fnmatch($allowedRoute, $routeOptions)) return true;
+      }
+
+      /*
       // Check route permissions
       if (isset($routeOptions['permission'])) {
          return in_array($userGroup, (array)$routeOptions['permission']);
       }
+      */
 
       // Default deny access
       return false;

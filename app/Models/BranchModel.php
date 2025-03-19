@@ -18,7 +18,8 @@ class BranchModel extends Model
    ];
    protected $validationRules = [
       'name' => 'required|max_length[255]',
-      'is_head_office' => 'permit_empty|in_list[0,1]'
+      'is_head_office' => 'permit_empty|in_list[0,1]',
+      'is_active' => 'permit_empty|in_list[0,1]',
    ];
    protected $useTimestamps = true;
    protected $createdField = 'create_date';
@@ -26,7 +27,6 @@ class BranchModel extends Model
 
    public function toggleStatus($id, $userLogin)
    {
-      log_message('debug', "ToggleStatus Params - ID: {$id}, UserLogin: {$userLogin}");
 
       $branch = $this->find($id);
       if (!$branch) {

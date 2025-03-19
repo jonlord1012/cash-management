@@ -28,6 +28,11 @@ class CoaModel extends Model
       return $this->groupSegments($coas);
    }
 
+   public function getAutocompleteData()
+   {
+      return $this->select('account_code, account_name')->findAll();
+   }
+
    // Group COA into hierarchical array
    private function groupSegments($coas)
    {
