@@ -129,3 +129,10 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+#Ignnore This
+vendor/composer/ClassLoader.php
+vendor/composer/autoload_classmap.php
+vendor/composer/autoload_files.php
+vendor/composer/autoload_real.php
+vendor/composer/autoload_static.php
+
