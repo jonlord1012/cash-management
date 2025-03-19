@@ -23,6 +23,12 @@
             <li class="nav-item">
                <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
+                  <p>Summary Input</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
                   <p>Hutang Bank</p>
                </a>
             </li>
