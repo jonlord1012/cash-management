@@ -13,6 +13,8 @@
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jquery-ui/jquery-ui.css') ?>">
    <!-- jsTree -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jstree/themes/default/style.min.css') ?>">
+   <!-- datepicker -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
    <style>
    .ui-autocomplete {
       position: absolute;
@@ -29,6 +31,9 @@
    <script src="<?= base_url('admin/dist/js/adminlte.min.js') ?>"></script>
    <script src="<?= base_url('admin/plugins/jstree/jstree.min.js') ?>"></script>
    <script src="<?= base_url('admin/plugins/jquery-ui/jquery-ui.js') ?>"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">

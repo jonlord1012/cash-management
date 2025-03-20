@@ -50,6 +50,7 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
 });
 
 $routes->group('reports', ['filter' => 'auth'], function ($routes) {
+   $routes->get('summary_input', 'Reports\AccountingReports::summaryInput');
    $routes->get('hutang_bank', 'Reports\AccountingReports::hutangBank');
    $routes->get('pemegang_saham', 'Reports\AccountingReports::pemegangSaham');
    $routes->get('kas_hutang_jangka_panjang', 'Reports\AccountingReports::kasHutangJangkaPanjang');

@@ -23,6 +23,16 @@ class AccountingReports extends BaseController
       helper('form');
    }
 
+   public function summaryInput()
+   {
+      $data = [
+         'title' => 'Branch Management ' . $this->userLogin,
+         'branches' => $this->model->orderBy('is_head_office', 'DESC')->findAll()
+      ];
+
+      return view('reports/summary_input', $data);
+   }
+
    public function hutangBank()
    {
       $data = [

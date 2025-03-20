@@ -24,7 +24,7 @@
             <!-- REPORTS MENU -->
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+               <a href="<?= site_url('reports/summary_input') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Summary Input</p>
                </a>
