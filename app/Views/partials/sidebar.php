@@ -8,17 +8,20 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
             <li class="nav-item">
                <a href="<?= site_url('dashboard') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
                </a>
             </li>
+            <!-- ACCOUNTING MENU-->
             <li class="nav-header">ACCOUNTING</li>
             <li class="nav-item">
                <a href="<?= site_url('accounting/transaction') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>Journal Entries</p>
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>Journal Entries</p>
                </a>
             </li>
+            <!-- END ACCOUNTING MENU-->
+            <!-- REPORTS MENU -->
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
                <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
@@ -29,7 +32,43 @@
             <li class="nav-item">
                <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>Hutang Bank</p>
+                  <p>Cash/Bank</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Arus Kas</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Rincian Cash Flow</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Kas Dari Penjualan Aktiva</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Aktiva Tetap</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Aktiva Dalam Pembangunan</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Kas Hutang Jangka Panjang</p>
                </a>
             </li>
             <li class="nav-item">
@@ -41,31 +80,19 @@
             <li class="nav-item">
                <a href="<?= site_url('pemegang_saham') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p> pemegang_saham</p>
+                  <p> Pemegang Saham</p>
                </a>
             </li>
             <li class="nav-item">
                <a href="<?= site_url('kas_hutang_jangka_panjang') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>kas_hutang_jangka_panjang</p>
+                  <p>Biaya Promosi</p>
                </a>
             </li>
             <li class="nav-item">
                <a href="<?= site_url('aktiva_dalam_pembangunan') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>aktiva_dalam_pembangunan</p>
-               </a>
-            </li>
-            <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>Hutang Bank</p>
-               </a>
-            </li>
-            <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>Hutang Bank</p>
+                  <p>Biaya ADM & Umum Lainnya</p>
                </a>
             </li>
             <!-- END REPORTS -->
