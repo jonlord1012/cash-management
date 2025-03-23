@@ -9,14 +9,15 @@
    <!-- admin -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/fontawesome-free/css/all.min.css') ?>">
    <link rel="stylesheet" href="<?= base_url('admin/dist/css/adminlte.min.css') ?>">
+   <link rel="stylesheet" href="<?= base_url('admin/dist/css/jambuluwuk.css') ?>">
    <!-- jquery-ui -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jquery-ui/jquery-ui.css') ?>">
    <!-- jsTree -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jstree/themes/default/style.min.css') ?>">
    <!-- datepicker -->
-   <link rel="stylesheet"
+   <!--    <link rel="stylesheet"
       href="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>"
-      crossorigin="anonymous">
+      crossorigin="anonymous"> -->
    <style>
    .ui-autocomplete {
       position: absolute;
@@ -78,10 +79,10 @@
 <script src="<?= base_url('admin/plugins/popper/umd/popper.min.js') ?>" crossorigin="anonymous"></script>
 
 <script src="<?= base_url('admin/dist/js/luxon.min.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('admin/dist/js/year_month_picker.js') ?>"></script>
+<!-- <script type="text/javascript" src="<?= base_url('admin/dist/js/year_month_picker.js') ?>"></script> -->
 <script src="<?= base_url('admin/plugins/moment/moment.min.js') ?>"> </script>
-<script src="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"
-   crossorigin="anonymous">
+<!-- <script src="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>" 
+crossorigin="anonymous">-->
 </script>
 
 </html>

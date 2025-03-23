@@ -195,7 +195,7 @@ class Transaction extends BaseController
             return $this->response->setJSON([
                'status' => 'success',
                'message' => 'Transaction saved successfully',
-               'redirect' => site_url('accounting/transaction')
+               'redirect' => site_url('accounting/transaction/new')
             ]);
          }
          log_message('error', 'Failed to save transaction: ' . print_r($this->model->errors(), true));

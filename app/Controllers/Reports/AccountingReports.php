@@ -76,4 +76,33 @@ class AccountingReports extends BaseController
 
       return view('reports/summary_reports', $data);
    }
+   public function getCashBankReport()
+   {
+
+      $branch_name = getBranchNameByUserCode($this->userLogin);
+      $branch_code = getBranchCodeByUserCode($this->userLogin);
+
+      // Get branch code from the logged-in user
+      #$branchCode = $this->request->getGet('branchCode');
+
+      // Get date range from the request (if provided)
+      $bankCode = $this->request->getGet('bank_code');
+      $startDate = $this->request->getGet('start_date');
+      $endDate = $this->request->getGet('end_date');
+
+      // Fetch summary data
+      $cashBankData = $this->model->getCashBankReport($branch_code, $bankCode, $startDate, $endDate);
+
+      // Prepare data for the view
+      $data = [
+         'title' => 'Cash / Bank Report',
+         'summaryData' => $cashBankData,
+         'startDate' => $startDate,
+         'endDate' => $endDate,
+         'branchName' => $branch_name,
+         'branchCode' => $branch_code,
+      ];
+
+      return view('reports/cash_bank', $data);
+   }
 }

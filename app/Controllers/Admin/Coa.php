@@ -22,6 +22,7 @@ class Coa extends BaseController
       $data = [
          'title' => 'COA Management',
          'coaStructure' => $this->model->getGroupedCoa(),
+         'coaFlatList' => $this->model->getFlatList(),
          'categories' => ['Asset', 'Liability', 'Equity', 'Revenue', 'Expense']
       ];
 
@@ -56,7 +57,8 @@ class Coa extends BaseController
          'segment2' => $segments[1],
          'segment3' => $segments[2],
          'segment4' => $segments[3],
-         'name' => $this->request->getPost('name'),
+         'account_code' => $this->request->getPost('code'),
+         'account_name' => $this->request->getPost('name'),
          'category' => $this->request->getPost('category'),
          'is_active' => 1
       ];

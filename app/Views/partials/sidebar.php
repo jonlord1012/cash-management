@@ -24,7 +24,7 @@
             <!-- REPORTS MENU -->
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
-               <a href="<?= site_url('reports/summary_reports') ?>" class="nav-link">
+               <a href="<?= site_url('reports/summary_report') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Summary Input</p>
                </a>
@@ -99,6 +99,13 @@
 
             <!-- COMPANY -->
             <li class="nav-header">COMPANY</li>
+
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/coa') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>COA</p>
+               </a>
+            </li>
             <li class="nav-item">
                <a href="<?= site_url('/admin/branches/') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
@@ -106,9 +113,21 @@
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('/admin/coa') ?>" class="nav-link">
+               <a href="<?= site_url('/admin/rptname/') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>COA</p>
+                  <p>Report Name</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/rptgroup/') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Report Group</p>
+               </a>
+            </li>
+            <li class="nav-item">
+               <a href="<?= site_url('/admin/rptsetting/') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Report Setting</p>
                </a>
             </li>
             <!-- END COMPANY -->

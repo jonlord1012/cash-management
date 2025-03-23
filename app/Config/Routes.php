@@ -30,12 +30,29 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('branches/edit/(:num)', 'Admin\Branches::edit/$1');
    $routes->post('branches/update/(:num)', 'Admin\Branches::update/$1');
 
+   # Report Name 
+   $routes->get('rptname', 'Admin\ZReports::reportName');
+   $routes->get('rptname/create', 'Admin\ZReports::reportNamecreate');
+   $routes->post('rptname/save', 'Admin\ZReports::reportNamesave');
+   $routes->get('rptname/toggle/(:num)', 'Admin\ZReports::reportNametoggle/$1');
+   $routes->get('rptname/edit/(:num)', 'Admin\ZReports::reportNameedit/$1');
+   $routes->post('rptname/update/(:num)', 'Admin\ZReports::reportNameupdate/$1');
+
+   # Report Groups 
+   $routes->get('rptgroups', 'Admin\ZReports::reportGroups');
+   $routes->get('rptgroups/create', 'Admin\ZReports::reportGroupscreate');
+   $routes->post('rptgroups/save', 'Admin\ZReports::reportGroupssave');
+   $routes->get('rptgroups/toggle/(:num)', 'Admin\ZReports::reportGroupstoggle/$1');
+   $routes->get('rptgroups/edit/(:num)', 'Admin\ZReports::reportGroupsedit/$1');
+   $routes->post('rptgroups/update/(:num)', 'Admin\ZReports::reportGroupsupdate/$1');
+
    # USERS
    $routes->get('users', 'Admin\Users::index');
    $routes->post('users/save', 'Admin\Users::save');
    $routes->get('users/delete/(:num)', 'Admin\Users::delete/$1');
    $routes->get('audit-logs', 'Admin\AuditLog::index');
 });
+
 $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
    $routes->get('journal', 'Accounting::journalEntry');
    $routes->post('journal/save', 'Accounting::saveJournal');
@@ -52,6 +69,7 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('reports', ['filter' => 'auth'], function ($routes) {
    $routes->get('summary_report', 'Reports\AccountingReports::summaryReport');
+   $routes->get('cash_bank', 'Reports\AccountingReports::getCashBankReport');
    $routes->get('hutang_bank', 'Reports\AccountingReports::hutangBank');
    $routes->get('pemegang_saham', 'Reports\AccountingReports::pemegangSaham');
    $routes->get('kas_hutang_jangka_panjang', 'Reports\AccountingReports::kasHutangJangkaPanjang');

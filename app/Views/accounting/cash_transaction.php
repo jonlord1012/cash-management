@@ -4,6 +4,9 @@
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">Cash Management</h3>
+      <a href="<?= site_url('accounting/transaction/new') ?>" class="btn btn-primary float-right">
+         <i class="fas fa-plus"></i> New Transaction
+      </a>
    </div>
    <div class="card-header warning">
       <h3 class="card-title">Ref No : &nbsp;</h3> <label><?= $refNo; ?> </label>

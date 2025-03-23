@@ -13,9 +13,9 @@ class CoaModel extends Model
       'segment2',
       'segment3',
       'segment4',
-      'name',
+      'account_code',
+      'account_name',
       'category',
-      'report_category',
       'is_active'
    ];
 
@@ -32,7 +32,13 @@ class CoaModel extends Model
    {
       return $this->select('account_code, account_name')->findAll();
    }
+   public function getFlatList()
+   {
+      $coas = $this->orderBy('account_code', 'ASC')
+         ->findAll();
 
+      return $coas;
+   }
    // Group COA into hierarchical array
    private function groupSegments($coas)
    {

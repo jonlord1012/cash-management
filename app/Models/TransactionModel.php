@@ -12,6 +12,7 @@ class TransactionModel extends Model
    protected $allowedFields = [
       'ref_no',
       'branch_code',
+      'branch_name',
       'transaction_date',
       'account_code',
       'account_name',
