@@ -7,7 +7,7 @@
    </div>
    <div class="card-body">
       <!-- Date Range Filter Form -->
-      <form method="get" action="<?= site_url('accounting/transaction/summaryReport') ?>" class="mb-4">
+      <form method="get" action="<?= site_url('reports/summary_report') ?>" class="mb-4">
          <div class="row">
             <div class="col-sm-6">
                <div class="form-group">
