@@ -8,23 +8,23 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
             <li class="nav-item">
                <a href="<?= site_url('dashboard') ?>" class="nav-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>Dashboard</p>
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>Dashboard</p>
                </a>
             </li>
             <!-- ACCOUNTING MENU-->
             <li class="nav-header">ACCOUNTING</li>
             <li class="nav-item">
                <a href="<?= site_url('accounting/transaction') ?>" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
-                    <p>Journal Entries</p>
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Journal Entries</p>
                </a>
             </li>
             <!-- END ACCOUNTING MENU-->
             <!-- REPORTS MENU -->
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
-               <a href="<?= site_url('reports/summary_input') ?>" class="nav-link">
+               <a href="<?= site_url('reports/summary_reports') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Summary Input</p>
                </a>

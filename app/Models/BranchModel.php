@@ -45,18 +45,6 @@ class BranchModel extends Model
          log_message('error', "Failed to update branch ID {$id}");
       }
       return $result;
-
-      /*
-      $branch = $this->find($id);
-      if ($branch) {
-         $newStatus = $branch['is_active'] ? 0 : 1;
-         return $this->update($id, [
-            'is_active' => $newStatus,
-            'update_user' => $userLogin # Get current user from auth
-         ]);
-      }
-      return false;
-      */
    }
    public function createBranch($data, $userLogin)
    {

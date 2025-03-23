@@ -66,13 +66,6 @@ class Branches extends BaseController
 
    public function toggle($id)
    {
-      /*
-      die(json_encode([
-         'id' => $id,
-         'userLogin' => $this->userLogin,
-         'branch' => $this->model->find($id)
-      ]));
-      */
       if ($this->model->toggleStatus($id, $this->userLogin)) {
          return redirect()->back()->with('success', 'Branch status updated');
       }

@@ -13,6 +13,7 @@ $routes->get('dashboard', 'Dashboard::index');
 $routes->get('login', 'Login::index');
 $routes->post('login/auth', 'Login::authenticate');
 $routes->get('logout', 'Login::logout');
+$routes->get('global', 'Reports\AccountingReports::summaryReport');
 
 
 // Add filter to admin group
@@ -50,7 +51,7 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
 });
 
 $routes->group('reports', ['filter' => 'auth'], function ($routes) {
-   $routes->get('summary_input', 'Reports\AccountingReports::summaryInput');
+   $routes->get('summary_report', 'Reports\AccountingReports::summaryReport');
    $routes->get('hutang_bank', 'Reports\AccountingReports::hutangBank');
    $routes->get('pemegang_saham', 'Reports\AccountingReports::pemegangSaham');
    $routes->get('kas_hutang_jangka_panjang', 'Reports\AccountingReports::kasHutangJangkaPanjang');

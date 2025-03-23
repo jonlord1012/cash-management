@@ -14,7 +14,9 @@
    <!-- jsTree -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jstree/themes/default/style.min.css') ?>">
    <!-- datepicker -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+   <link rel="stylesheet"
+      href="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>"
+      crossorigin="anonymous">
    <style>
    .ui-autocomplete {
       position: absolute;
@@ -25,15 +27,6 @@
       overflow-y: auto;
    }
    </style>
-   <!-- Scripts -->
-   <script src="<?= base_url('admin/plugins/jquery/jquery.min.js') ?>"></script>
-   <script src="<?= base_url('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-   <script src="<?= base_url('admin/dist/js/adminlte.min.js') ?>"></script>
-   <script src="<?= base_url('admin/plugins/jstree/jstree.min.js') ?>"></script>
-   <script src="<?= base_url('admin/plugins/jquery-ui/jquery-ui.js') ?>"></script>
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -75,6 +68,21 @@
 
 </body>
 
+
+<!-- Scripts -->
+<script src="<?= base_url('admin/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('admin/dist/js/adminlte.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/jstree/jstree.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/jquery-ui/jquery-ui.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/popper/umd/popper.min.js') ?>" crossorigin="anonymous"></script>
+
+<script src="<?= base_url('admin/dist/js/luxon.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('admin/dist/js/year_month_picker.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/moment/moment.min.js') ?>"> </script>
+<script src="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"
+   crossorigin="anonymous">
+</script>
 
 </html>
 <?= $this->renderSection('scripts') ?>
