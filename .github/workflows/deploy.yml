@@ -4,16 +4,17 @@ on:
     branches:
       - main
 jobs:
-  deploy:
-    runs-on: windows
+    web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
 
-    - name: Upload via FTP
-      uses: Binjava/deploy@4.0.0
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ftp://jambul.binjava.id
+        server: ftp.binjava.id
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./
