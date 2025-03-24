@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-    web-deploy:
+    deploy:
     runs-on: ubuntu-latest
     
     steps:
