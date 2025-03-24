@@ -18,4 +18,4 @@ jobs:
             username: ${{ secrets.UVIL_TO_BINJAVA }}
             password: ${{ secrets.NYANGKUT_TO_BINJAVA }}
             local-dir: ./
-            server-dir: /public_html/jambuluwuk/
+            server-dir: /
