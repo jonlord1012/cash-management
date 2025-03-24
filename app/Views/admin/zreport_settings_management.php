@@ -38,6 +38,7 @@
                <td><?= $zrpt_setting['report_code'] ?></td>
                <td><?= $zrpt_setting['group_code'] ?></td>
                <td><?= $zrpt_setting['account_code'] ?></td>
+               <td><?= $zrpt_setting['is_debit'] ?></td>
                <td>
                   <?= $zrpt_setting['is_active'] ?
                         '<span class="badge bg-success">Active</span>' :
@@ -91,9 +92,14 @@
                </div>
 
                <div class="form-group">
-                  <label>Is Debit</label>
-                  <input type="text" name="is_debit" class="form-control" required>
-                  <small class="form-text text-muted">Report position (Debit or Credit) </small>
+                  <div class="custom-control custom-checkbox">
+                     <input type="checkbox" name="is_debit" value="1" class="custom-control-input" id="is_debit"
+                        <?= $branch['is_debit'] ? 'checked' : '' ?>>
+                     <label class="custom-control-label" for="is_debit">
+                        Is Debit
+                     </label>
+                  </div>
+                  <small class="form-text text-muted">Position on Report</small>
                </div>
 
 

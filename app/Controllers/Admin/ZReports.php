@@ -238,8 +238,9 @@ class ZReports extends BaseController
       log_message('debug', 'Save method called with data: ' . print_r($this->request->getPost(), true));
 
       $validation = $this->validate([
-         'group_code' => 'required|min_length[5]|max_length[75]|is_unique[z_report_groups.group_code]',
-         'group_name' => 'required|max_length[255]',
+         'report_code' => 'required|max_length[75]',
+         'group_code' => 'required|max_length[75]',
+         'account_code' => 'required|max_length[75]',
 
       ]);
 
@@ -248,16 +249,19 @@ class ZReports extends BaseController
       }
 
       $data = [
+         'report_code' => $this->request->getPost('report_code'),
          'group_code' => $this->request->getPost('group_code'),
-         'group_name' => $this->request->getPost('group_name'),
+         'account_code' => $this->request->getPost('account_code'),
          'create_user' =>  $this->userLogin,
          'update_user' =>  $this->userLogin,
          'is_active' => $this->request->getPost('is_active') ?? 0,
+         'is_debit' => $this->request->getPost('is_debit') ?? 0
+
 
       ];
 
       try {
-         $this->groupModel->save($data);
+         $this->settingModel->save($data);
          return redirect()->to('/admin/rptgroups')->with('success', 'Report Group added successfully');
       } catch (\Exception $e) {
          return redirect()->back()->withInput()->with('error', 'Database error: ' . $e->getMessage());
@@ -266,26 +270,26 @@ class ZReports extends BaseController
 
    public function reportSettingtoggle($id)
    {
-      if ($this->groupModel->toggleStatus($id, $this->userLogin)) {
+      if ($this->settingModel->toggleStatus($id, $this->userLogin)) {
          return redirect()->back()->with('success', 'Report Group status updated');
       }
       return redirect()->back()->with('error', 'Failed to update Report Group status');
    }
    public function reportSettingedit($id)
    {
-      $zreport_groups = $this->groupModel->find($id);
-      if (!$zreport_groups) {
+      $zreport_settings = $this->settingModel->find($id);
+      if (!$zreport_settings) {
          return redirect()->to('/admin/rptgroups')->with('error', 'Report Name not found');
       }
 
       return view('admin/zreport_groups_edit', [
-         'zreport_groups' => $zreport_groups
+         'zreport_groups' => $zreport_settings
       ]);
    }
    public function reportSettingupdate($id)
    {
-      $zreport_groups = $this->groupModel->find($id);
-      if (!$zreport_groups) {
+      $zreport_settings = $this->settingModel->find($id);
+      if (!$zreport_settings) {
          return redirect()->back()->with('error', 'Report Name not found');
       }
 
@@ -294,11 +298,11 @@ class ZReports extends BaseController
          'update_user' => $this->userLogin,
       ];
 
-      if ($this->groupModel->update($id, $data, $this->userLogin)) {
+      if ($this->settingModel->update($id, $data, $this->userLogin)) {
          return redirect()->to('/admin/rptgroups')->with('success', 'Report updated successfully');
       }
 
-      return redirect()->back()->withInput()->with('errors', $this->groupModel->errors());
+      return redirect()->back()->withInput()->with('errors', $this->settingModel->errors());
    }
    /* END Z_REPORTS */
 
