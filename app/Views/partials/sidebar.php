@@ -119,13 +119,13 @@
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('/admin/rptgroup/') ?>" class="nav-link">
+               <a href="<?= site_url('/admin/rptgroups/') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Report Group</p>
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('/admin/rptsetting/') ?>" class="nav-link">
+               <a href="<?= site_url('/admin/rptsettings/') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Report Setting</p>
                </a>

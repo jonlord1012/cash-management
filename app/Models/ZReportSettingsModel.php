@@ -4,30 +4,29 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ZReportGroupsModel extends Model
+class ZReportSettingsModel extends Model
 {
-   protected $table = 'z_report_groups';
+   protected $table = 'z_report_settings';
    protected $primaryKey = 'id';
    protected $allowedFields = [
+      'report_code',
       'group_code',
-      'group_name',
+      'account_code',
+      'is_debit',
       'is_active',
       'create_user',
       'update_user'
    ];
    protected $validationRules = [
+      'report_code' => 'required|max_length[75]',
       'group_code' => 'required|max_length[75]',
-      'group_name' => 'required|max_length[255]',
+      'account_code' => 'required|max_length[255]',
+      'is_debit' => 'permit_empty|in_list[0,1]',
       'is_active' => 'permit_empty|in_list[0,1]',
    ];
    protected $useTimestamps = true;
    protected $createdField = 'create_date';
    protected $updatedField = 'update_date';
-
-   public function getAutocompleteData()
-   {
-      return $this->select('group_code, group_name')->findAll();
-   }
 
    public function toggleStatus($id, $userLogin)
    {

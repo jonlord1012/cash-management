@@ -22,6 +22,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('coa', 'Admin\Coa::index');
    $routes->post('coa/save', 'Admin\Coa::save');
 
+   $routes->get('getcoa', 'Admin\ZReports::getCoa');
+   $routes->get('getreportsname', 'Admin\ZReports::getReportsName');
+   $routes->get('getgroupsname', 'Admin\ZReports::getReportGroups');
+
+
    # Branches 
    $routes->get('branches', 'Admin\Branches::index');
    $routes->get('branches/create', 'Admin\Branches::create');
@@ -45,6 +50,14 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('rptgroups/toggle/(:num)', 'Admin\ZReports::reportGroupstoggle/$1');
    $routes->get('rptgroups/edit/(:num)', 'Admin\ZReports::reportGroupsedit/$1');
    $routes->post('rptgroups/update/(:num)', 'Admin\ZReports::reportGroupsupdate/$1');
+
+   # Report Settings 
+   $routes->get('rptsettings', 'Admin\ZReports::reportSetting');
+   $routes->get('rptsettings/new', 'Admin\ZReports::reportSettingnew');
+   $routes->post('rptsettings/save', 'Admin\ZReports::reportSettingsave');
+   $routes->get('rptsettings/toggle/(:num)', 'Admin\ZReports::reportSettingtoggle/$1');
+   $routes->get('rptsettings/edit/(:num)', 'Admin\ZReports::reportSettingedit/$1');
+   $routes->post('rptsettings/update/(:num)', 'Admin\ZReports::reportSettingupdate/$1');
 
    # USERS
    $routes->get('users', 'Admin\Users::index');
