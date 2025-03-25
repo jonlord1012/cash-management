@@ -140,4 +140,33 @@ class AccountingReports extends BaseController
 
       return view('reports/arus_kas_breakdown', $data);
    }
+
+   public function getKasPenjualanAktiva()
+   {
+
+      $branch_name = getBranchNameByUserCode($this->userLogin);
+      $branch_code = getBranchCodeByUserCode($this->userLogin);
+
+      // Get branch code from the logged-in user
+      #$branchCode = $this->request->getGet('branchCode');
+
+      // Get date range from the request (if provided)
+      $startDate = $this->request->getGet('start_date');
+      $endDate = $this->request->getGet('end_date');
+
+      // Fetch summary data
+      $summaryData = $this->model->getSummaryReport($branch_code, $startDate, $endDate);
+
+      // Prepare data for the view
+      $data = [
+         'title' => 'Kas Penjualan Aktiva',
+         'summaryData' => $summaryData,
+         'startDate' => $startDate,
+         'endDate' => $endDate,
+         'branchName' => $branch_name,
+         'branchCode' => $branch_code,
+      ];
+
+      return view('reports/kas_penjualan_aktiva', $data);
+   }
 }

@@ -54,9 +54,9 @@
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+               <a href="<?= site_url('reports/kas_penjualan_aktiva') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>Kas Dari Penjualan Aktiva</p>
+                  <p>Kas Penjualan Aktiva</p>
                </a>
             </li>
             <li class="nav-item">
