@@ -20,10 +20,10 @@
    <div class="card">
       <ul class="nav nav-tabs" id="coaTabs" role="tablist">
          <li class="nav-item">
-            <a class="nav-link active" id="tree-tab" data-toggle="tab" href="#treeView" role="tab">Tree View</a>
+            <a class="nav-link" id="grid-tab" data-toggle="tab" href="#gridView" role="tab">Grid View</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="grid-tab" data-toggle="tab" href="#gridView" role="tab">Grid View</a>
+            <a class="nav-link active" id="tree-tab" data-toggle="tab" href="#treeView" role="tab">Tree View</a>
          </li>
       </ul>
 

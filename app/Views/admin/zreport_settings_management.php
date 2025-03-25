@@ -94,7 +94,7 @@
                <div class="form-group">
                   <div class="custom-control custom-checkbox">
                      <input type="checkbox" name="is_debit" value="1" class="custom-control-input" id="is_debit"
-                        <?= $branch['is_debit'] ? 'checked' : '' ?>>
+                        <?= $zreport_settings['is_debit'] ? 'checked' : '' ?>>
                      <label class="custom-control-label" for="is_debit">
                         Is Debit
                      </label>
