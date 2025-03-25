@@ -22,6 +22,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('coa', 'Admin\Coa::index');
    $routes->post('coa/save', 'Admin\Coa::save');
 
+   $routes->get('getcoa', 'Admin\ZReports::getCoa');
+   $routes->get('getreportsname', 'Admin\ZReports::getReportsName');
+   $routes->get('getgroupsname', 'Admin\ZReports::getReportGroups');
+
+
    # Branches 
    $routes->get('branches', 'Admin\Branches::index');
    $routes->get('branches/create', 'Admin\Branches::create');
@@ -45,6 +50,14 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('rptgroups/toggle/(:num)', 'Admin\ZReports::reportGroupstoggle/$1');
    $routes->get('rptgroups/edit/(:num)', 'Admin\ZReports::reportGroupsedit/$1');
    $routes->post('rptgroups/update/(:num)', 'Admin\ZReports::reportGroupsupdate/$1');
+
+   # Report Settings 
+   $routes->get('rptsettings', 'Admin\ZReports::reportSetting');
+   $routes->get('rptsettings/new', 'Admin\ZReports::reportSettingnew');
+   $routes->post('rptsettings/save', 'Admin\ZReports::reportSettingsave');
+   $routes->get('rptsettings/toggle/(:num)', 'Admin\ZReports::reportSettingtoggle/$1');
+   $routes->get('rptsettings/edit/(:num)', 'Admin\ZReports::reportSettingedit/$1');
+   $routes->post('rptsettings/update/(:num)', 'Admin\ZReports::reportSettingupdate/$1');
 
    # USERS
    $routes->get('users', 'Admin\Users::index');
@@ -70,6 +83,7 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
 $routes->group('reports', ['filter' => 'auth'], function ($routes) {
    $routes->get('summary_report', 'Reports\AccountingReports::summaryReport');
    $routes->get('cash_bank', 'Reports\AccountingReports::getCashBankReport');
+   $routes->get('arus_kas_breakdown', 'Reports\AccountingReports::getArusKasBreakdown');
    $routes->get('hutang_bank', 'Reports\AccountingReports::hutangBank');
    $routes->get('pemegang_saham', 'Reports\AccountingReports::pemegangSaham');
    $routes->get('kas_hutang_jangka_panjang', 'Reports\AccountingReports::kasHutangJangkaPanjang');

@@ -30,3 +30,53 @@
 .table-responsive {
    margin-top: 15px;
 }
+
+.table td {
+   padding: 0.75rem;
+   vertical-align: middle;
+}
+
+.table thead th {
+   vertical-align: middle;
+}
+
+.dayofmonth {
+   min-width: 120px;
+}
+
+.total {
+   min-width: 200px;
+}
+
+.description {
+   min-width: 350px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+   background-color: rgba(0, 0, 0, .02);
+}
+
+.table-bordered {
+   border: 1px solid #dee2e6;
+}
+
+.table td:empty::before {
+   content: "-";
+   color: #6c757d;
+   opacity: 0.5;
+}
+
+.table-responsive {
+   overflow-x: auto;
+   min-height: 0.01%;
+}
+
+@media screen and (max-width: 767px) {
+   .table-responsive {
+      width: 100%;
+      margin-bottom: 15px;
+      overflow-y: hidden;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      border: 1px solid #ddd;
+   }
+}

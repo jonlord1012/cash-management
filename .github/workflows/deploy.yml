@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - main
+name: Deploy to FTP
+jobs:
+    web-deploy:
+        runs-on: ubuntu-latest
+    
+        steps:
+        - name: Get latest code
+          uses: actions/checkout@v4
+
+        - name: Sync files
+          uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+          with:
+            server: ftp.binjava.id
+            username: ${{ secrets.UVIL_TO_BINJAVA }}
+            password: ${{ secrets.NYANGKUT_TO_BINJAVA }}
+            local-dir: ./
+            server-dir: /

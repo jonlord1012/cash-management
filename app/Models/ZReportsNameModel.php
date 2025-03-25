@@ -24,6 +24,11 @@ class ZReportsNameModel extends Model
    protected $createdField = 'create_date';
    protected $updatedField = 'update_date';
 
+   public function getAutocompleteData()
+   {
+      return $this->select('report_code, report_name')->findAll();
+   }
+
    public function toggleStatus($id, $userLogin)
    {
 
