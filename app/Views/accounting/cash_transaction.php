@@ -41,7 +41,7 @@
                   <td><?= $t['account_code'] ?> - <?= $t['account_name'] ?></td>
                   <td><?= $t['bank_code'] ?> - <?= $t['bank_name'] ?></td>
                   <td><?= $t['description'] ?></td>
-                  <td><?= $t['document_no'] ?> </td>
+                  <td><?= $t['doc_no'] ?> </td>
                   <td><?= number_format($t['debit']) ?></td>
                   <td><?= number_format($t['credit']) ?></td>
                   <td><?= date('d/m/Y', strtotime($t['transaction_date'])) ?></td>

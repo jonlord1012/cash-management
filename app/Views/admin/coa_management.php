@@ -20,24 +20,17 @@
    <div class="card">
       <ul class="nav nav-tabs" id="coaTabs" role="tablist">
          <li class="nav-item">
-            <a class="nav-link active" id="tree-tab" data-toggle="tab" href="#treeView" role="tab">Tree View</a>
+            <a class="nav-link" id="grid-tab" data-toggle="tab" href="#gridView" role="tab">Grid View</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="grid-tab" data-toggle="tab" href="#gridView" role="tab">Grid View</a>
+            <a class="nav-link active" id="tree-tab" data-toggle="tab" href="#treeView" role="tab">Tree View</a>
          </li>
       </ul>
 
       <!-- Tab Content -->
       <div class="tab-content mt-3">
-         <!-- Tree View Tab -->
-         <div class="tab-pane fade show active" id="treeView" role="tabpanel">
-            <div id="coaTree">
-               <?= renderCoaTree($coaStructure) ?>
-            </div>
-         </div>
-
          <!-- Grid View Tab -->
-         <div class="tab-pane fade" id="gridView" role="tabpanel">
+         <div class="tab-pane fade show active" id="gridView" role="tabpanel">
             <div class="table-responsive">
                <table class="table table-bordered table-striped">
                   <thead>
@@ -65,6 +58,13 @@
                      <?php endforeach; ?>
                   </tbody>
                </table>
+            </div>
+         </div>
+
+         <!-- Tree View Tab -->
+         <div class="tab-pane fade " id="treeView" role="tabpanel">
+            <div id="coaTree">
+               <?= renderCoaTree($coaStructure) ?>
             </div>
          </div>
       </div>
