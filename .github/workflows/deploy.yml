@@ -19,3 +19,11 @@ jobs:
             password: ${{ secrets.NYANGKUT_TO_BINJAVA }}
             local-dir: ./
             server-dir: /
+            exclude: |
+              **/.git*
+              **/.git*/**
+              **/node_modules/**
+              **/.env*
+              **/vendor*/**
+              **/writeable*/**
+              **/test*/**
