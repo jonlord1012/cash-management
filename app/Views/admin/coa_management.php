@@ -29,15 +29,8 @@
 
       <!-- Tab Content -->
       <div class="tab-content mt-3">
-         <!-- Tree View Tab -->
-         <div class="tab-pane fade show active" id="treeView" role="tabpanel">
-            <div id="coaTree">
-               <?= renderCoaTree($coaStructure) ?>
-            </div>
-         </div>
-
          <!-- Grid View Tab -->
-         <div class="tab-pane fade" id="gridView" role="tabpanel">
+         <div class="tab-pane fade show active" id="gridView" role="tabpanel">
             <div class="table-responsive">
                <table class="table table-bordered table-striped">
                   <thead>
@@ -65,6 +58,13 @@
                      <?php endforeach; ?>
                   </tbody>
                </table>
+            </div>
+         </div>
+
+         <!-- Tree View Tab -->
+         <div class="tab-pane fade " id="treeView" role="tabpanel">
+            <div id="coaTree">
+               <?= renderCoaTree($coaStructure) ?>
             </div>
          </div>
       </div>
