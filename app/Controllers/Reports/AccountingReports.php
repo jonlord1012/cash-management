@@ -11,8 +11,11 @@ class AccountingReports extends BaseController
    protected $model;
    protected $branches;
    protected $userLogin;
+   protected $db;
    public function __construct()
    {
+      $this->db = \Config\Database::connect();
+
       $this->branches = new BranchModel();
       $this->model = new ReportsModel();
       $auth = service('auth');
@@ -37,6 +40,12 @@ class AccountingReports extends BaseController
       return view('reports/summary_input', $data);
    }
       */
+   private function getDaysInMonth($period)
+   {
+      $date = \DateTime::createFromFormat('F-Y', $period);
+      return $date->format('t'); // Returns number of days in month
+   }
+
 
    public function hutangBank()
    {
@@ -104,5 +113,31 @@ class AccountingReports extends BaseController
       ];
 
       return view('reports/cash_bank', $data);
+   }
+
+
+   public function getArusKasBreakdown()
+   {
+
+      $branch_name = getBranchNameByUserCode($this->userLogin);
+      $branch_code = getBranchCodeByUserCode($this->userLogin);
+
+
+      $period = 'March 2025';
+      $daysInMonth = (int) date('t', strtotime($period));
+      $cash_flow_data = $this->model->getDailyCashFlowJSON($period);
+      // Prepare data for the view
+      $data = [
+         'title' => 'Laporan Arus Kas (Breakdown)',
+         'period' => $period,
+         'days_in_month' => $this->getDaysInMonth($period),
+         'cash_flow_data' => $cash_flow_data,
+         'start_balance' => '0',
+         'end_balance' => '0',
+         'branchName' => $branch_name,
+         'branchCode' => $branch_code,
+      ];
+
+      return view('reports/arus_kas_breakdown', $data);
    }
 }

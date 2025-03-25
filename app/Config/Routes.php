@@ -83,6 +83,7 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
 $routes->group('reports', ['filter' => 'auth'], function ($routes) {
    $routes->get('summary_report', 'Reports\AccountingReports::summaryReport');
    $routes->get('cash_bank', 'Reports\AccountingReports::getCashBankReport');
+   $routes->get('arus_kas_breakdown', 'Reports\AccountingReports::getArusKasBreakdown');
    $routes->get('hutang_bank', 'Reports\AccountingReports::hutangBank');
    $routes->get('pemegang_saham', 'Reports\AccountingReports::pemegangSaham');
    $routes->get('kas_hutang_jangka_panjang', 'Reports\AccountingReports::kasHutangJangkaPanjang');

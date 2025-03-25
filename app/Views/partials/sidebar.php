@@ -36,9 +36,15 @@
                </a>
             </li>
             <li class="nav-item">
+               <a href="<?= site_url('reports/arus_kas_breakdown') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Arus Kas (Breakdown)</p>
+               </a>
+            </li>
+            <li class="nav-item">
                <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>Arus Kas</p>
+                  <p>Arus Kas (KP)</p>
                </a>
             </li>
             <li class="nav-item">
