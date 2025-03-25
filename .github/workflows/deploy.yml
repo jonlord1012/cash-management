@@ -27,3 +27,4 @@ jobs:
               **/vendor*/**
               **/writeable*/**
               **/test*/**
+              ./app/Config/App.php
