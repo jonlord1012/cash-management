@@ -15,7 +15,7 @@ if (!function_exists('renderCoaTree')) {
 
          if ($data) {
             $html .= '<span class="account-item" data-id="' . $data['id'] . '">';
-            $html .= '<strong>' . $data['segment4'] . '</strong> - ' . $data['name'];
+            $html .= '<strong>' . $data['segment4'] . '</strong> - ' . $data['acccount_name'];
             $html .= ' <span class="badge bg-' . getCategoryColor($data['category']) . '">' . $data['category'] . '</span>';
             $html .= '</span>';
          } else {
