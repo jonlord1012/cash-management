@@ -11,6 +11,8 @@ class ZReportGroupsModel extends Model
    protected $allowedFields = [
       'group_code',
       'group_name',
+      'account_code',
+      'account_name',
       'is_active',
       'create_user',
       'update_user'

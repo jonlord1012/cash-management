@@ -144,6 +144,8 @@ class ZReports extends BaseController
       $data = [
          'group_code' => $this->request->getPost('group_code'),
          'group_name' => $this->request->getPost('group_name'),
+         'account_code' => $this->request->getPost('account_code'),
+         'account_name' => $this->request->getPost('account_name'),
          'create_user' =>  $this->userLogin,
          'update_user' =>  $this->userLogin,
          'is_active' => $this->request->getPost('is_active') ?? 0,
@@ -185,6 +187,8 @@ class ZReports extends BaseController
 
       $data = [
          'group_name' => $this->request->getPost('group_name'),
+         'account_code' => $this->request->getPost('account_code'),
+         'account_name' => $this->request->getPost('account_name'),
          'update_user' => $this->userLogin,
       ];
 

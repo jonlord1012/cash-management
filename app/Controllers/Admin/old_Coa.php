@@ -23,7 +23,7 @@ class Coa extends BaseController
          'title' => 'COA Management',
          'coaStructure' => $this->model->getGroupedCoa(),
          'coaFlatList' => $this->model->getFlatList(),
-         'categories' => ['Header', 'Detail', 'Total', 'Other']
+         'categories' => ['Asset', 'Liability', 'Equity', 'Revenue', 'Expense']
       ];
 
       return view('admin/coa_management', $data);
@@ -41,7 +41,6 @@ class Coa extends BaseController
          return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
       }
 
-      /*
       // Validate COA format
       $code = $this->request->getPost('code');
       $validationResult = $this->model->validateCOA($code);
@@ -49,7 +48,7 @@ class Coa extends BaseController
       if ($validationResult !== true) {
          return redirect()->back()->withInput()->with('error', $validationResult);
       }
-*/
+
       // Split segments
       $segments = explode('-', $code);
 
@@ -61,8 +60,6 @@ class Coa extends BaseController
          'account_code' => $this->request->getPost('code'),
          'account_name' => $this->request->getPost('name'),
          'category' => $this->request->getPost('category'),
-         'header_code' => $this->request->getPost('header_code'),
-         'total_code' => $this->request->getPost('total_code'),
          'is_active' => 1
       ];
 

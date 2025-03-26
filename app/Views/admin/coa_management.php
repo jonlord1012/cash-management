@@ -38,6 +38,8 @@
                         <th>Code</th>
                         <th>Account Name</th>
                         <th>Category</th>
+                        <th>Header</th>
+                        <th>Total</th>
                         <th>Actions</th>
                      </tr>
                   </thead>
@@ -47,9 +49,12 @@
                      foreach ($coaFlatList as $account):
                      ?>
                      <tr>
-                        <td><?= $account['account_code'] ?></td>
-                        <td><?= $account['account_name'] ?></td>
+                        <?php if ($account['category'] != "Header" | $account['category'] != "Total")  $class = 'padding-md'; ?>
+                        <td class="<?= $class; ?>"><?= $account['account_code'] ?></td>
+                        <td class="<?= $class; ?>"><?= $account['account_name'] ?></td>
                         <td><?= $account['category'] ?></td>
+                        <td><?= $account['header_code'] ?></td>
+                        <td><?= $account['total_code'] ?></td>
                         <td>
                            <button class="btn btn-sm btn-warning">Edit</button>
                            <button class="btn btn-sm btn-danger">Delete</button>
@@ -62,7 +67,7 @@
          </div>
 
          <!-- Tree View Tab -->
-         <div class="tab-pane fade " id="treeView" role="tabpanel">
+         <div class="tab-pane fade" id="treeView" role="tabpanel">
             <div id="coaTree">
                <?= renderCoaTree($coaStructure) ?>
             </div>
@@ -105,6 +110,18 @@
                         <?php endforeach; ?>
                      </select>
                   </div>
+
+
+                  <div class="form-group">
+                     <label>Header Code</label>
+                     <input type="text" name="header_code" class="form-control" required>
+                  </div>
+
+                  <div class="form-group">
+                     <label>Total Code</label>
+                     <input type="text" name="total_code" class="form-control" required>
+                  </div>
+
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -134,6 +151,29 @@
          },
          "plugins": ["types"]
       });
+   });
+   $('#coaTree').jstree({
+      'core': {
+         'themes': {
+            'dots': false,
+            'icons': false
+         }
+      },
+      'plugins': ['types'],
+      'types': {
+         'default': {
+            'icon': 'fas fa-folder'
+         },
+         'Header': {
+            'icon': 'fas fa-folder-tree'
+         },
+         'Detail': {
+            'icon': 'fas fa-file-invoice'
+         },
+         'Total': {
+            'icon': 'fas fa-calculator'
+         }
+      }
    });
    </script>
    <?= $this->endSection() ?>
