@@ -1,7 +1,7 @@
 <?php
 
-if (!function_exists('renderCoaTree')) {
-   function renderCoaTree($structure, $level = 0)
+if (!function_exists('old_renderCoaTree')) {
+   function old_renderCoaTree($structure, $level = 0)
    {
       $html = '<ul>';
 
@@ -23,6 +23,45 @@ if (!function_exists('renderCoaTree')) {
          }
 
          if ($hasChildren) {
+            $html .= old_renderCoaTree($children, $level + 1);
+         }
+
+         $html .= '</li>';
+      }
+
+      $html .= '</ul>';
+      return $html;
+   }
+}
+
+if (!function_exists('renderCoaTree')) {
+   function renderCoaTree($nodes, $level = 0)
+   {
+      $html = '<ul class="flex-column">';
+
+      foreach ($nodes as $node) {
+         $data = $node['data'];
+         $children = $node['children'];
+         $isTotal = ($data['category'] === 'Total') || isset($data['_is_total']);
+
+         $html .= '<li class="' . ($isTotal ? 'jstree-total' : 'jstree-' . strtolower($data['category'])) . '"';
+         $html .= ' data-category="' . $data['category'] . '">';
+
+         // Content
+         $html .= '<div class="account-node  " >';
+         $html .= '<span class="account-code  ">' . $data['account_code'] . '</span>';
+         $html .= '<span class="account-name  ">' . $data['account_name'] . '</span>';
+
+         /*  if (!$isTotal) {*/
+         $html .= '<span class="badge  ' . getCategoryClass($data['category']) . '">';
+         $html .= $data['category'];
+         $html .= '</span>';
+         /*}*/
+
+         $html .= '</div>';
+
+         // Children
+         if (!empty($children)) {
             $html .= renderCoaTree($children, $level + 1);
          }
 
@@ -31,6 +70,20 @@ if (!function_exists('renderCoaTree')) {
 
       $html .= '</ul>';
       return $html;
+   }
+}
+
+// Helper function for category styling
+if (!function_exists('getCategoryClass')) {
+   function getCategoryClass($category)
+   {
+      $classes = [
+         'Header' => 'bg-primary',
+         'Detail' => 'bg-success',
+         'Total' => 'bg-warning text-dark',
+         'Others' => 'bg-secondary'
+      ];
+      return $classes[$category] ?? 'bg-light text-dark';
    }
 }
 

@@ -71,6 +71,58 @@
    min-height: 0.01%;
 }
 
+.account-item {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   padding: 0.25rem 0;
+}
+
+.account-code {
+   font-weight: 600;
+   min-width: 80px;
+   padding: 0 0.5rem 0 0;
+}
+
+.account-name {
+   flex-grow: 1;
+   padding: 0 0.5rem 0 0;
+}
+
+/* JsTree theming */
+.jstree-header>.jstree-anchor {
+   font-weight: bold;
+   padding: 0 0.5rem 0 0;
+}
+
+.jstree-total>.jstree-anchor {
+   font-style: italic;
+   padding-left: -20;
+}
+
+.jstree-detail>.jstree-anchor {
+   padding-left: 20;
+   font-weight: 600;
+   min-width: 80px;
+}
+
+.jstree-total .account-code {
+   font-weight: bold;
+   color: #d32f2f;
+   padding: 0 0.5rem 0 0;
+   margin-left: -1.5rem;
+}
+
+.jstree-total .account-name {
+   font-style: italic;
+   padding: 0 0.5rem 0 0;
+}
+
+.account-node {
+   flex-grow: 1;
+   padding: 0 0.5rem 0 0;
+}
+
 @media screen and (max-width: 767px) {
    .table-responsive {
       width: 100%;
