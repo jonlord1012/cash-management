@@ -7,7 +7,9 @@ use CodeIgniter\Model;
 class ZReportsNameModel extends Model
 {
    protected $table = 'z_reports';
-   protected $primaryKey = 'id';
+   protected $primaryKey = 'report_code';
+
+   protected $useAutoIncrement = false;
    protected $allowedFields = [
       'report_code',
       'report_name',

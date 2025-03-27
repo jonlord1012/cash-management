@@ -26,7 +26,7 @@ class Branches extends BaseController
    {
       $data = [
          'title' => 'Branch Management ' . $this->userLogin,
-         'branches' => $this->model->orderBy('is_head_office', 'DESC')->findAll()
+         'branches' => $this->model->orderBy('is_head_office desc, branch_code asc')->findAll()
       ];
 
       return view('admin/branch_management', $data);

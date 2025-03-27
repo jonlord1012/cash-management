@@ -40,8 +40,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('rptname/create', 'Admin\ZReports::reportNamecreate');
    $routes->post('rptname/save', 'Admin\ZReports::reportNamesave');
    $routes->get('rptname/toggle/(:num)', 'Admin\ZReports::reportNametoggle/$1');
-   $routes->get('rptname/edit/(:num)', 'Admin\ZReports::reportNameedit/$1');
-   $routes->post('rptname/update/(:num)', 'Admin\ZReports::reportNameupdate/$1');
+   $routes->get('rptname/edit/(:any)', 'Admin\ZReports::reportNameedit/$1');
+   $routes->post('rptname/update/(:any)', 'Admin\ZReports::reportNameupdate/$1');
 
    # Report Groups 
    $routes->get('rptgroups', 'Admin\ZReports::reportGroups');
@@ -62,7 +62,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    # USERS
    $routes->get('users', 'Admin\Users::index');
    $routes->post('users/save', 'Admin\Users::save');
-   $routes->get('users/delete/(:num)', 'Admin\Users::delete/$1');
+   $routes->get('users/delete/(:any)', 'Admin\Users::delete/$1');
    $routes->get('audit-logs', 'Admin\AuditLog::index');
 });
 

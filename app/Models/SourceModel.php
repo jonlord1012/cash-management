@@ -10,6 +10,8 @@ class SourceModel extends Model
    protected $idKey = 'id';
    protected $primaryKey = 'bank_code';
 
+   protected $useAutoIncrement = false;
+
    protected $allowedFields = [
       'branch_code',
       'bank_code',

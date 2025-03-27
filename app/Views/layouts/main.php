@@ -21,7 +21,7 @@
    <style>
    .ui-autocomplete {
       position: absolute;
-      z-index: 1000;
+      z-index: 1150 !important;
       background: white;
       border: 1px solid #ccc;
       max-height: 200px;

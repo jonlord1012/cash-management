@@ -7,7 +7,9 @@ use CodeIgniter\Model;
 class BranchModel extends Model
 {
    protected $table = 'branches';
-   protected $primaryKey = 'id';
+
+   protected $useAutoIncrement = false;
+   protected $primaryKey = 'branch_code';
    protected $allowedFields = [
       'branch_code',
       'name',
