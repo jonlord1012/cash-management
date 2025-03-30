@@ -17,21 +17,15 @@ class AuthFilter implements FilterInterface
          return redirect()->to('/login');
       }
 
-      /*
-      // Additional group/permission checks can go here
-      $user = $auth->user();
-      $currentRoute = service('router')->getMatchedRouteOptions();
-
-      if (!$auth->hasAccess(session('user_group'), $currentRoute)) {
-         return redirect()->to('/unauthorized');
-      }
-      */
       // Check route permissions
       $userGroup = $auth->user()['user_group'];
-      $route = $request->getUri()->getPath();
 
-      if (!$auth->hasAccess($userGroup, $route)) {
-         return redirect()->to('/login');
+      $currentUri = $request->getUri()->getPath();
+      $routeOptions = service('router')->getMatchedRouteOptions();
+
+
+      if (!$auth->hasAccess($userGroup, $currentUri, $routeOptions)) {
+         return redirect()->to('/unauthorized');
       }
       return $request;
    }

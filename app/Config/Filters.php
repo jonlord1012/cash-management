@@ -39,6 +39,7 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+
             'auth' => [
                 'except' => [
                     'login',
@@ -46,7 +47,13 @@ class Filters extends BaseConfig
                     '/'
                 ]
             ],
-            'sanitize',
+            'sanitize' => [
+                'except' => [
+                    'login',
+                    'login/*',
+                    '/'
+                ]
+            ],
 
         ],
         'after' => [

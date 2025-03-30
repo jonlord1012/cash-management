@@ -17,7 +17,7 @@ class Coa extends BaseController
 
    public function index()
    {
-      helper('coa'); // Add this line
+      helper('coa');
 
       $data = [
          'title' => 'COA Management',

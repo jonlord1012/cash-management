@@ -9,15 +9,26 @@
    <!-- admin -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/fontawesome-free/css/all.min.css') ?>">
    <link rel="stylesheet" href="<?= base_url('admin/dist/css/adminlte.min.css') ?>">
+
    <link rel="stylesheet" href="<?= base_url('admin/dist/css/jambuluwuk.css') ?>">
    <!-- jquery-ui -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jquery-ui/jquery-ui.css') ?>">
+   <link rel="stylesheet" href="<?= base_url('admin/plugins/jquery-ui/jquery-ui.theme.min.css') ?>">
+   <link rel="stylesheet" href="<?= base_url('admin/plugins/jquery-ui/jquery-ui.structure.min.css') ?>">
    <!-- jsTree -->
    <link rel="stylesheet" href="<?= base_url('admin/plugins/jstree/themes/default/style.min.css') ?>">
-   <!-- datepicker -->
-   <!--    <link rel="stylesheet"
-      href="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?>"
-      crossorigin="anonymous"> -->
+
+   <!-- datatables -->
+   <link rel="stylesheet" href="<?= base_url('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
+   <link rel="stylesheet"
+      href="<?= base_url('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+   <link rel="stylesheet" href="<?= base_url('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>">
+   <link rel="stylesheet"
+      href="<?= base_url('admin/plugins/datatables-colreorder/css/colReorder.bootstrap4.min.css') ?>">
+   <link rel="stylesheet"
+      href="<?= base_url('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+
+
    <style>
    .ui-autocomplete {
       position: absolute;
@@ -78,12 +89,32 @@
 <script src="<?= base_url('admin/plugins/jquery-ui/jquery-ui.js') ?>"></script>
 <script src="<?= base_url('admin/plugins/popper/umd/popper.min.js') ?>" crossorigin="anonymous"></script>
 
-<script src="<?= base_url('admin/dist/js/luxon.min.js') ?>"></script>
-<!-- <script type="text/javascript" src="<?= base_url('admin/dist/js/year_month_picker.js') ?>"></script> -->
+<!-- for Export -->
+<script src="<?= base_url('admin/plugins/jszip/jszip.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/pdfmake/pdfmake.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/pdfmake/vfs_fonts.js') ?>"></script>
+
+<!-- datatables -->
+<script src="<?= base_url('admin/plugins/datatables/jquery.dataTables.min.js') ?>"></script> <!-- core -->
+<script src="<?= base_url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+<!-- bootstrap theming -->
+<script src="<?= base_url('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>"></script>
+<!-- button core -->
+<script src="<?= base_url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+<!-- butto bootstrap theming -->
+<script src="<?= base_url('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/datatables-buttons/js/buttons.html5.min.js') ?>"></script>
+<script src="<?= base_url('admin/plugins/datatables-buttons/js/buttons.print.min.js') ?>"></script>
+
+<script src="<?= base_url('admin/plugins/datatables-colreorder/js/colReorder.bootstrap4.min.js') ?>"></script>
+
+<script src="<?= base_url('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
+
+<!-- <script src="<?= base_url('admin/dist/js/luxon.min.js') ?>"></script> -->
 <script src="<?= base_url('admin/plugins/moment/moment.min.js') ?>"> </script>
-<!-- <script src="<?= base_url('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>" 
-crossorigin="anonymous">-->
-</script>
+
 
 </html>
 <?= $this->renderSection('scripts') ?>

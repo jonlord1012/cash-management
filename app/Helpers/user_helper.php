@@ -43,3 +43,42 @@ if (!function_exists('getBranchCodeByUserCode')) {
       return $branch_code ? $branch_code['branch_code'] : 'N/A';
    }
 }
+
+if (!function_exists('getBranchShortNameByBranchCode')) {
+   function getBranchShortNameByBranchCode($branchCode)
+   {
+      $userModel = new \App\Models\BranchModel();
+      $branchName = $userModel->where('branch_code', $branchCode)->first();
+      return $branchName ? $branchName['short_name'] : 'N/A';
+   }
+}
+
+if (!function_exists('getBranchNameByBranchCode')) {
+   function getBranchNameByBranchCode($branchCode)
+   {
+      $userModel = new \App\Models\BranchModel();
+      $branchName = $userModel->where('branch_code', $branchCode)->first();
+      return $branchName ? $branchName['name'] : 'N/A';
+   }
+}
+
+if (!function_exists('getIsHeadOffice')) {
+   function getIsHeadOffice($branchCode)
+   {
+      $userModel = new \App\Models\BranchModel();
+      $is_head_office = $userModel->where('branch_code', $branchCode)->first();
+      return $is_head_office ? $is_head_office['is_head_office'] : '0';
+   }
+}
+
+if (!function_exists('validateDataTableRequest')) {
+   function validateDataTablesRequest($request)
+   {
+      $required = ['draw', 'start', 'length'];
+      foreach ($required as $param) {
+         if (!isset($request[$param])) {
+            throw new InvalidArgumentException("Missing $param parameter");
+         }
+      }
+   }
+}

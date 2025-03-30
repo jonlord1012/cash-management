@@ -9,7 +9,7 @@ class Login extends BaseController
    public function index()
    {
       if (service('auth')->check()) {
-         return redirect()->to('/dashboard');
+         return redirect()->to('dashboard');
       }
       return view('auth/login');
    }
@@ -30,5 +30,10 @@ class Login extends BaseController
    {
       service('auth')->logout();
       return redirect()->to('/login');
+   }
+
+   public function unauthorized()
+   {
+      return view('/unauthorized');
    }
 }

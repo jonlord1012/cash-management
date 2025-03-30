@@ -15,6 +15,7 @@ class Transaction extends BaseController
    protected $model;
    protected $userLogin;
    protected $branchCode;
+   protected $branchName;
 
    public function __construct()
    {
@@ -22,7 +23,8 @@ class Transaction extends BaseController
       $auth = service('auth');
       if ($auth->check()) {
          $this->userLogin = $auth->user()['username'];
-         $this->branchCode = $auth->user()['branch_code'];
+         $this->branchName = getBranchNameByUserCode($this->userLogin);
+         $this->branchCode = getBranchCodeByUserCode($this->userLogin);
       } else {
          // Redirect to login or throw exception
          throw new \RuntimeException('User not authenticated');

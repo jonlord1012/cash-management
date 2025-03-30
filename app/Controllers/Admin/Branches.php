@@ -18,12 +18,13 @@ class Branches extends BaseController
       } else {
          // Redirect to login or throw exception
          throw new \RuntimeException('User not authenticated');
-         return redirect()->to('/login');
+         return redirect()->to('login');
       }
    }
 
    public function index()
    {
+
       $data = [
          'title' => 'Branch Management ' . $this->userLogin,
          'branches' => $this->model->orderBy('is_head_office desc, branch_code asc')->findAll()
