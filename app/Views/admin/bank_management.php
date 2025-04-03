@@ -21,6 +21,7 @@
                <th>Branch Name</th>
                <th>Bank Code</th>
                <th>Bank Name</th>
+               <th>COA </th>
                <th>Account No</th>
                <th>Account Name </th>
                <th>Bank Address</th>
@@ -37,6 +38,80 @@
 
    </div>
 </div>
+
+
+<!-- Add Bank Modal -->
+<div class="modal fade" id="editBankModal" role="dialog">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <form action="<?= site_url('admin/banks/save') ?>" method="post">
+            <div class="modal-header">
+               <h4 class="modal-title">Bank Management</h4>
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <?php if (session()->getFlashdata('success')): ?>
+               <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+               <?php endif; ?>
+               <?php if (session()->getFlashdata('error')): ?>
+               <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+               <?php endif; ?>
+            </div>
+            <div class="modal-body">
+
+               <div class="form-group">
+                  <label>Branch Code</label>
+                  <select name="branch_code" class="form-control" id="modal-input-branch-code" required>
+                     <option value="">Select Branch</option>
+                     <?php foreach ($branches as $branch): ?>
+                     <option value="<?= $branch['branch_code'] ?>"><?= $branch['branch_name'] ?></option>
+                     <?php endforeach; ?>
+                  </select>
+               </div>
+               <div class="form-group">
+                  <label>Bank Code</label>
+                  <input type="text" name="bank_code" class="form-control" id="modal-input-bank-code" required>
+                  <input type="hidden" name="form_mode" class="form-control" id="modal-form-mode" required>
+               </div>
+
+               <div class="form-group">
+                  <label>Bank Name</label>
+                  <input type="text" name="bank_name" class="form-control" id="modal-input-bank-name" required>
+               </div>
+               <div class="form-group">
+                  <label class="d-sm-block">Akun</label>
+                  <input type="text" class="form-control autocomplete-coa col-sm-4 d-sm-inline-block"
+                     name="account_code" id="modal-input-account-code" placeholder=" Start typing Coa or name..."
+                     autocomplete="off" required>
+                  <input type="text" class="form-control col-sm-7 d-sm-inline-block" name="account_name"
+                     id="accountName" readonly>
+               </div>
+
+               <div class="form-group">
+                  <label>Account No</label>
+                  <input type="text" class="form-control" name="bank_account_no" placeholder="Type account number"
+                     autocomplete="off" id="modal-input-bank-account-no" required>
+               </div>
+               <div class="form-group">
+                  <label>Account Name</label>
+                  <input type="text" class="form-control" name="bank_account_name" placeholder="Type account Name"
+                     autocomplete="off" id="modal-input-bank-account-name" required>
+               </div>
+               <div class="form-group">
+                  <label>Bank Address</label>
+                  <input type="text" class="form-control" name="bank_address" placeholder="Start typing Bank Address"
+                     autocomplete="off" id="modal-input-bank-address" required>
+               </div>
+
+
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save Bank</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
 <?= $this->endSection() ?>
 
 
@@ -62,6 +137,14 @@ $(document).ready(function() {
          },
          {
             data: 'bank_name'
+         },
+         {
+
+            data: null,
+            render: function(data, type, row) {
+               return data.account_code + " -  " + data.account_name;
+            }
+
          },
          {
             data: 'bank_account_no'
@@ -94,12 +177,23 @@ $(document).ready(function() {
             orderable: false,
             render: function(data, type, row) {
                return `
-                        <a href="${row.toggle_url}" class="btn btn-sm btn-${row.is_active ? 'warning' : 'success'}">
-                            ${row.is_active ? 'Deactivate' : 'Activate'}
-                        </a>
-                        <a href="${row.edit_url}" class="btn btn-sm btn-primary">
-                            <i class="fas fa-edit"></i>
-                        </a>
+                     <a href="${row.toggle_url}" class="btn btn-sm btn-${row.is_active ? 'warning' : 'success'}">
+                ${row.is_active ? 'Deactivate' : 'Activate'}
+                     </a>
+                     <a href="#"
+                        class="btn btn-sm btn-primary editButton"
+                        data-toggle="modal" data-target="#editBankModal"
+                        data-id="${row.id}"
+                        data-branch_code="${row.branch_code}"
+                        data-bank_code="${row.bank_code}"
+                        data-bank_name="${row.bank_name}"
+                        data-account_code="${row.account_code}"
+                        data-account_name="${row.account_name}"
+                        data-bank_account_no="${row.bank_account_no}"
+                        data-bank_account_name="${row.bank_account_name}"
+                        data-bank_address="${row.bank_address}">
+                        <i class="fas fa-edit"></i>
+            </a>
                     `;
             }
          }
@@ -107,30 +201,7 @@ $(document).ready(function() {
       dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
          "<'row'<'col-sm-12'tr>>" +
          "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-      /*
-         buttons: [{
-            extend: 'colvis',
-            text: 'Columns',
-            className: 'btn-default'
-         },
-         {
-            extend: 'excel',
-            text: 'Excel',
-            className: 'btn-success',
-            exportOptions: {
-               columns: ':visible'
-            }
-         },
-         {
-            extend: 'pdf',
-            text: 'PDF',
-            className: 'btn-danger',
-            exportOptions: {
-               columns: ':visible'
-            }
-         }
-      ]
-      */
+
       buttons: [{
             extend: 'colvis',
             text: 'Columns'
@@ -182,6 +253,96 @@ $(document).ready(function() {
             targets: [10]
          } // Disable sorting for action column
       ]
+   });
+});
+
+/* Edit Modal Trigger */
+$(document).ready(function() {
+   // Attach event listener on the table for dynamically generated .editButton elements
+   $('#dataGrid').on('click', '.editButton', function() {
+      const data = $(this).data();
+      $('#modal-input-id').val(data.id);
+      $('#modal-input-branch-code').val(data.branch_code);
+      $('#modal-input-bank-code').val(data.bank_code);
+      $('#modal-form-mode').val('edit');
+      $('#modal-input-bank-name').val(data.bank_name);
+      $('#modal-input-account-code').val(data.account_code);
+      $('#accountName').val(data.account_name);
+      $('#modal-input-bank-account-no').val(data.bank_account_no);
+      $('#modal-input-bank-account-name').val(data.bank_account_name);
+      $('#modal-input-bank-address').val(data.bank_address);
+
+   });
+
+   // COA Autocomplete
+   $('.autocomplete-coa').autocomplete({
+      source: function(request, response) {
+         $.ajax({
+            url: '<?= site_url('accounting/getcoa') ?>',
+            dataType: 'json',
+            data: {
+               term: request.term
+            },
+            success: function(data) {
+               response(data);
+            },
+            error: function(xhr) {
+               console.error('COA Search Error:', xhr.responseText);
+            }
+         });
+      },
+      minLength: 2,
+      select: function(event, ui) {
+         if (!ui.item) {
+            console.error('Invalid selection');
+            return false;
+         }
+         $('#accountName').val(ui.item.account_name);
+         $('[name="account_code"]').val(ui.item.account_code).trigger('change');
+         return false;
+      }
+
+   }).autocomplete('instance')._renderItem = function(ul, item) {
+      return $('<li>')
+         .append(`<div>${item.account_code} - ${item.account_name}</div>`)
+         .appendTo(ul);
+   };
+
+   // Form Submission
+   $('#editBankModal form').on('submit', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+         type: "POST",
+         url: $(this).attr('action'),
+         data: $(this).serialize(),
+         dataType: 'json', // Ensure expecting JSON response
+         success: function(response) {
+            if (response.status === 'success') {
+               $('#editBankModal').modal('hide');
+               if (response.redirect) {
+                  window.location.href = response.redirect;
+               } else {
+                  // For table refresh if using AJAX data
+                  location.reload();
+               }
+            } else {
+               // Handle validation errors
+               if (response.errors) {
+                  Object.keys(response.errors).forEach(function(key) {
+                     const $field = $('[name="' + key + '"]');
+                     $field.addClass('is-invalid');
+                     $field.after(
+                        '<div class="invalid-feedback">' +
+                        response.errors[key] +
+                        '</div>'
+                     );
+                  });
+               }
+               alert(response.message || 'An error occurred');
+            }
+         },
+      });
    });
 });
 </script>

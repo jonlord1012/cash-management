@@ -19,6 +19,7 @@ class BanksModel extends Model
       'branch_code',
       'bank_code',
       'bank_name',
+      'account_code',
       'bank_account_no',
       'bank_account_name',
       'bank_address',
@@ -30,6 +31,7 @@ class BanksModel extends Model
       'branch_code' => 'required|max_length[75]',
       'bank_code' => 'required|max_length[75]',
       'bank_name' => 'required|max_length[255]',
+      'account_code' => 'required|max_length[75]',
       'bank_account_no' => 'required|max_length[75]',
       'bank_account_name' => 'required|max_length[255]',
       'is_head_office' => 'permit_empty|in_list[0,1]',
@@ -66,7 +68,7 @@ class BanksModel extends Model
    public function updateBank($code, $data, $userLogin)
    {
       $data['update_user'] = $userLogin;
-      return $this->update($code, $data);
+      $this->update($code, $data) or die(print_r($data));
    }
 
    private function getDataGridColumns()
@@ -76,13 +78,14 @@ class BanksModel extends Model
          1 => 'branches.name',
          2 => 'bank_account.bank_code',
          3 => 'bank_account.bank_name',
-         4 => 'bank_account.bank_account_no',
-         5 => 'bank_account.bank_account_name',
-         6 => 'bank_account.bank_address',
-         7 => 'bank_account.is_active',
-         8 => 'bank_account.update_date',
-         9 => 'bank_account.update_user'
-         // 10 => action column (not sortable)
+         4 => 'bank_account.account_code',
+         5 => 'bank_account.bank_account_no',
+         6 => 'bank_account.bank_account_name',
+         7 => 'bank_account.bank_address',
+         8 => 'bank_account.is_active',
+         9 => 'bank_account.update_date',
+         10 => 'bank_account.update_user'
+         // 11 => action column (not sortable)
       ];
       return $columns;
    }
@@ -142,6 +145,8 @@ class BanksModel extends Model
             'name' => getBranchNameByBranchCode($row['branch_code']),
             'bank_code' => $row['bank_code'],
             'bank_name' => $row['bank_name'],
+            'account_code' => $row['account_code'],
+            'account_name' => getCOANameByCode($row['account_code']),
             'bank_account_no' => $row['bank_account_no'],
             'bank_account_name' => $row['bank_account_name'],
             'bank_address' => $row['bank_address'],
@@ -185,8 +190,8 @@ class BanksModel extends Model
 
       // Apply sorting
       foreach ($order as $o) {
-         $colIndex = $o['column'];
-         $dir = $o['dir'];
+         $colIndex = $o[0];
+         $dir = $o[1];
          $columns = $this->getDataGridColumns(); // Reuse your column mapping
          if (isset($columns[$colIndex])) {
             $builder->orderBy($columns[$colIndex], $dir);

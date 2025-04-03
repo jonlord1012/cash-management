@@ -27,6 +27,11 @@ class BranchModel extends Model
    protected $createdField = 'create_date';
    protected $updatedField = 'update_date';
 
+   public function getAutocompleteData()
+   {
+      return $this->select('branch_code, name as branch_name')->findAll();
+   }
+
    public function toggleStatus($id, $userLogin)
    {
 

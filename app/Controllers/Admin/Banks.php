@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\BanksModel;
+use App\Models\BranchModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use TCPDF;
@@ -34,9 +35,13 @@ class Banks extends BaseController
 
    public function index()
    {
+      $branches = new BranchModel();
+      $coas = new \App\Models\CoaModel();
       $data = [
          'title' => 'Banks Management ' . $this->userLogin,
-         'banks' => $this->model->orderBy('branch_code asc, bank_code asc')->findAll()
+         'banks' => $this->model->orderBy('branch_code asc, bank_code asc')->findAll(),
+         'branches' => $branches->getAutocompleteData(),
+         'coas' => $coas->getAutocompleteData(),
       ];
 
       return view('admin/bank_management', $data);
@@ -56,11 +61,12 @@ class Banks extends BaseController
    {
 
       log_message('debug', 'Save method called with data: ' . print_r($this->request->getPost(), true));
-
+      $bankCode  = $this->request->getPost('bank_code');
       $validation = $this->validate([
          'branch_code' => 'required|max_length[75]',
-         'bank_code' => 'required|min_length[4]|max_length[75]|is_unique[bank_account.bank_code]',
+         'bank_code' => "required|min_length[4]|max_length[75]|is_unique[bank_account.bank_code,bank_code,{$bankCode}]",
          'bank_name' => 'required|max_length[255]',
+         'account_code' => 'required|max_length[75]',
          'bank_account_no' => 'required|max_length[50]',
          'bank_account_name' => 'required|max_length[255]',
          'bank_address' => 'required|max_length[255]',
@@ -71,21 +77,49 @@ class Banks extends BaseController
          return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
       }
 
+      $mode = $this->request->getPost('form_mode') ?? 'create';
+
       $data = [
          'branch_code' => $this->request->getPost('branch_code'),
          'bank_code' => $this->request->getPost('bank_code'),
          'bank_name' => $this->request->getPost('bank_name'),
+         'account_code' => $this->request->getPost('account_code'),
          'bank_account_no' => $this->request->getPost('bank_account_no'),
          'bank_account_name' => $this->request->getPost('bank_account_name'),
          'bank_address' => $this->request->getPost('bank_address'),
-         'is_active' => $this->request->getPost('is_active') ?? 0
+         'is_active' => $this->request->getPost('is_active') ?? 1,
+         'update_user' => $this->userLogin,
       ];
 
+      try {
+         if ($mode === 'create') {
+            $this->model->createBank($data, $this->userLogin);
+         } elseif ($mode === 'edit') {
+            $this->model->updateBank($bankCode, $data, $this->userLogin);
+         } else {
+            return $this->response->setStatusCode(500)->setJSON([
+               'status' => 'error',
+               'message' => 'Database error: Undifined mode',
+            ]);
+         }
+         return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Bank saved successfully',
+            'redirect' => site_url('/admin/banks')
+         ]);
+      } catch (\Exception $e) {
+         return $this->response->setStatusCode(500)->setJSON([
+            'status' => 'error',
+            'message' => 'Database error: ' . $e->getMessage()
+         ]);
+      }
+      /*
       if ($this->model->createBranch($data, $this->userLogin)) {
          return redirect()->to('/admin/banks')->with('success', 'Bank created successfully');
       }
 
       return redirect()->back()->withInput()->with('error', 'Failed to create branch');
+      */
    }
 
    public function toggle($code)
@@ -117,6 +151,7 @@ class Banks extends BaseController
       $data = [
          'branch_code' => $this->request->getPost('branch_code'),
          'bank_name' => $this->request->getPost('bank_name'),
+         'account_code' => $this->request->getPost('account_code'),
          'bank_account_no' => $this->request->getPost('bank_account_no'),
          'bank_account_name' => $this->request->getPost('bank_account_name'),
          'bank_address' => $this->request->getPost('bank_address'),
@@ -198,6 +233,7 @@ class Banks extends BaseController
       $headers = [
          'Branch Code',
          'Branch Name',
+         'COA Code',
          'Bank Code',
          'Bank Name',
          'Account No',
@@ -218,12 +254,13 @@ class Banks extends BaseController
             $row['name'],
             $row['bank_code'],
             $row['bank_name'],
+            $row['account_code'],
             $row['bank_account_no'],
             $row['bank_account_name'],
             $row['bank_address'],
             $row['is_active'] ? 'Active' : 'Inactive',
             $row['update_date'],
-            $row['update_user_name']
+            $row['update_user']
          ], null, "A{$rowNum}");
          $rowNum++;
       }
@@ -264,6 +301,7 @@ class Banks extends BaseController
                 <th>Branch Name</th>
                 <th>Bank Code</th>
                 <th>Bank Name</th>
+                <th>COA</th>
                 <th>Account No</th>
                 <th>Account Name</th>
                 <th>Bank Address</th>
@@ -278,6 +316,7 @@ class Banks extends BaseController
             <td>' . $row['name'] . '</td>
             <td>' . $row['bank_code'] . '</td>
             <td>' . $row['bank_name'] . '</td>
+            <td>' . $row['account_code'] . '</td>
             <td>' . $row['bank_account_no'] . '</td>
             <td>' . $row['bank_account_name'] . '</td>
             <td>' . $row['bank_address'] . '</td>
