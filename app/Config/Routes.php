@@ -15,6 +15,7 @@ $routes->post('login/auth', 'Login::authenticate');
 $routes->get('logout', 'Login::logout');
 $routes->get('unauthorized', 'Login::unauthorized');
 $routes->get('global', 'Reports\AccountingReports::summaryReport');
+$routes->get('debug', 'Home::debug');
 
 
 /* ADMIN */
@@ -31,7 +32,9 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
    $routes->get('banks/grid', 'Admin\Banks::renderDataGrid');
    $routes->post('banks/create', 'Admin\Banks::create');
    $routes->post('banks/save', 'Admin\Banks::save');
+   $routes->get('banks/toggle/(:any)', 'Admin\Banks::toggle/$1');
    $routes->post('banks/edit/(:any)', 'Admin\Banks::edit/$1');
+   $routes->get('banks/delete/(:any)', 'Admin\Banks::delete/$1');
    $routes->get('banks/export/excel', 'Admin\Banks::exportExcel');
    $routes->get('banks/export/pdf', 'Admin\Banks::exportPdf');
 
@@ -81,7 +84,7 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
 
    # Transaction 
    $routes->get('transaction', 'Accounting\Transaction::viewTransaction');
-   $routes->post('transaction/new', 'Accounting\Transaction::new');
+   $routes->get('transaction/new', 'Accounting\Transaction::new');
    $routes->post('transaction/save', 'Accounting\Transaction::save');
 
    # Utilities
@@ -100,6 +103,8 @@ $routes->group('reports', ['filter' => 'auth'], function ($routes) {
    $routes->get('pemegang_saham', 'Reports\AccountingReports::pemegangSaham');
    $routes->get('kas_hutang_jangka_panjang', 'Reports\AccountingReports::kasHutangJangkaPanjang');
    $routes->get('aktiva_dalam_pembangunan', 'Reports\AccountingReports::activaDalamPembangunan');
+   $routes->get('getreportcodes', 'Admin\ZReports::getReportsName');
+   $routes->get('getreportgroups', 'Admin\ZReports::getReportGroups');
 });
 
 $routes->group('reports', ['filter' => 'auth'], function ($routes) {

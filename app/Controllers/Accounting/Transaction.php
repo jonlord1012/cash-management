@@ -5,8 +5,9 @@ namespace App\Controllers\Accounting;
 use App\Controllers\BaseController;
 
 use App\Libraries\Auth;
+use App\Models\BanksModel;
 use App\Models\CoaModel;
-use App\Models\SourceModel;
+use App\Models\BranchModel;
 use App\Models\TransactionModel;
 
 
@@ -68,23 +69,45 @@ class Transaction extends BaseController
    public function getBanks()
    {
       $term = $this->request->getGet('term');
-      $sourceModel = new SourceModel();
+      $branchModel = new \App\Models\BranchModel();
+      $bankModel = new BanksModel();
 
-      $results = $sourceModel->select('bank_code, bank_name')
-         ->where('branch_code', $this->branchCode)
-         ->groupStart()
-         ->like('bank_code', $term)
+      $getIsHO = $branchModel->find($this->branchCode);
+
+      if ($getIsHO['is_head_office'] === '0') {
+         $builder = $bankModel->select('bank_code, bank_name, account_code')
+            ->where('branch_code', $this->branchCode);
+      } else {
+         $builder = $bankModel->select('bank_code, bank_name, account_code');
+      }
+
+      $results = $builder->groupStart()
+         ->orLike('bank_code', $term)
          ->orLike('bank_name', $term)
          ->groupEnd()
          ->limit(10)
          ->findAll();
 
+      #$results = $builder->get()->getResultArray();
+      #print_r($builder->getLastQuery()->getQuery());
+      #die();
+
+      /*$results = $bankModel->select('bank_code, name as bank_name')
+         ->where('branch_code', $this->branchCode)
+         ->groupStart()
+         ->like('bank_code', $term)
+         ->orLike('name', $term)
+         ->groupEnd()
+         ->limit(10)
+         ->findAll();
+      */
       return $this->response->setJSON(array_map(function ($item) {
          return [
             'bank_code' => $item['bank_code'],
             'bank_name' => $item['bank_name'],
+            'account_code' => $item['account_code'],
             'value' => $item['bank_code'],
-            'label' => $item['bank_code'] . ' - ' . $item['bank_name']
+            'label' => $item['bank_code'] . ' - ' . $item['bank_name'] . ' - ' . $item['account_code']
          ];
       }, $results));
    }
@@ -96,8 +119,8 @@ class Transaction extends BaseController
       $refNo = $this->model->generateRefNo($this->branchCode);
       $coaModel = new CoaModel();
       $coaList = $coaModel->getAutocompleteData();
-      $sourceModel = new SourceModel();
-      $sourceList = $sourceModel->getAutocompleteData($this->branchCode);
+      $bankModel = new BanksModel();
+      $sourceList = $bankModel->getAutocompleteData($this->branchCode);
       $data = [
          'title' => 'Input Transaction ' . $branch_name,
          'refNo' => $refNo,
@@ -129,15 +152,12 @@ class Transaction extends BaseController
       $refNo = $this->model->generateRefNo($branch_code);
       $coaModel = new CoaModel();
       $coaList = $coaModel->getAutocompleteData();
-      $sourceModel = new SourceModel();
-      $sourceList = $sourceModel->getAutocompleteData($branch_code);
       $data = [
          'title' => 'Input Transaction ' . $branch_name,
          'refNo' => $refNo,
          'branchName' => $branch_name,
          'transactions' => $this->model->orderBy('transaction_date', 'DESC')->findAll(),
          'coaList' => $coaList,
-         'sourceList' => $sourceList,
 
       ];
       return view('accounting/cash_transaction', $data);

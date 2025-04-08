@@ -211,7 +211,7 @@ $(function() {
             return false;
          }
       }).autocomplete('instance')._renderItem = function(ul, item) {
-         console.log('Rendering item:', item); // Moved before return
+         //console.log('Rendering item:', item); // Moved before return
          return $('<li>')
             .append(`<div>${item.bank_code} - ${item.bank_name}</div>`)
             .appendTo(ul);

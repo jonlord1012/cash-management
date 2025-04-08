@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class BanksModel extends Model
+class BanksModel extends BaseModel
 {
    protected $table = 'bank_account';
 
@@ -14,6 +12,13 @@ class BanksModel extends Model
    protected $useTimestamps = true;
    protected $createdField = 'create_date';
    protected $updatedField = 'update_date';
+   protected $returnType     = 'array';
+
+   // Register callbacks for audit logging.
+   protected $afterInsert = ['auditAfterInsert'];
+   protected $afterUpdate = ['auditAfterUpdate'];
+   protected $afterDelete = ['auditAfterDelete'];
+
 
    protected $allowedFields = [
       'branch_code',
@@ -25,7 +30,8 @@ class BanksModel extends Model
       'bank_address',
       'is_active',
       'create_user',
-      'update_user'
+      'update_user',
+      'flag01'
    ];
    protected $validationRules = [
       'branch_code' => 'required|max_length[75]',
@@ -37,12 +43,26 @@ class BanksModel extends Model
       'is_head_office' => 'permit_empty|in_list[0,1]',
       'is_active' => 'permit_empty|in_list[0,1]',
    ];
-
+   public function getAutocompleteData($branch_code)
+   {
+      $branchModel = new \App\Models\BanksModel;
+      $getIsHO = $branchModel->find($branch_code);
+      $builder = $this->db->table('bank_account')
+         ->select('bank_code, bank_name, account_code ');
+      if ($getIsHO['is_head_oficce'] === '0') {
+         $results = $builder->groupStart()
+            ->where('branch_code', $branch_code)
+            ->groupEnd()
+            ->get()->getResultArray();
+      }
+      return $results;
+   }
    public function toggleStatus($code, $userLogin)
    {
+      #$bank = $this->select('*')->where('bank_code', $code)->get()->getResult();
       $banks = $this->find($code);
       if (!$banks) {
-         log_message('error', "Bank ID {$code} not found");
+         log_message('error', "Bank Code {$code} not found");
          return false;
       }
       $newStatus = $banks['is_active'] ? 0 : 1;
@@ -58,16 +78,35 @@ class BanksModel extends Model
       }
       return $result;
    }
+   public function deleteBank($code, $userLogin)
+   {
+      $banks = $this->find($code);
+      if (!$banks) {
+         log_message('error', "Bank Code {$code} not found");
+         return false;
+      }
+      log_message('debug', "Deleting Banks {$code}");
+
+      $result = $this->update($code, [
+         'flag01' => 'deleted',
+         'update_user' => $userLogin
+      ]);
+
+      if (!$result) {
+         log_message('error', "Failed to update branch Code {$code}");
+      }
+      return $result;
+   }
    public function createBank($data, $userLogin)
    {
-      $data['create_user'] = $userLogin;
-      $data['update_user'] = $userLogin;
+      $data['create_user'] = strtolower($userLogin);
+      $data['update_user'] = strtolower($userLogin);
       return $this->insert($data);
    }
 
    public function updateBank($code, $data, $userLogin)
    {
-      $data['update_user'] = $userLogin;
+      $data['update_user'] = strtolower($userLogin);
       $this->update($code, $data) or die(print_r($data));
    }
 
@@ -99,7 +138,8 @@ class BanksModel extends Model
       #$builder = $this->builder();
       $builder = $this->db->table('bank_account')
          ->select('bank_account.*, branches.name')
-         ->join('branches', 'branches.branch_code = bank_account.branch_code', 'left');
+         ->join('branches', 'branches.branch_code = bank_account.branch_code', 'left')
+         ->where('flag01 is null ');
 
       // Search
       if ($search) {
@@ -129,7 +169,7 @@ class BanksModel extends Model
          }
       }
       if (empty($order)) {
-         $builder->orderBy('branches.name', 'ASC');
+         $builder->orderBy('branches.name ASC, bank_account.name');
       }
 
       // Limit
@@ -154,7 +194,9 @@ class BanksModel extends Model
             'update_date' => $row['update_date'],
             'update_user_name' => getUserNameByName($row['update_user']),
             'toggle_url' => site_url('admin/banks/toggle/' . $row['bank_code']),
-            'edit_url' => site_url('admin/banks/edit/' . $row['bank_code'])
+            'edit_url' => site_url('admin/banks/edit/' . $row['bank_code']),
+            'delete_url' => site_url('admin/banks/delete/' . $row['bank_code']),
+
          ];
       }, $results);
    }

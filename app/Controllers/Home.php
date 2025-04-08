@@ -8,4 +8,10 @@ class Home extends BaseController
     {
         return view('welcome_message');
     }
+    public function debug()
+    {
+        echo "<pre>";
+        var_export($_SERVER);
+        echo "</pre>";
+    }
 }

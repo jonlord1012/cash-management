@@ -35,7 +35,7 @@
       z-index: 1150 !important;
       background: white;
       border: 1px solid #ccc;
-      max-height: 200px;
+      max-height: 400px;
       overflow-y: auto;
    }
    </style>
@@ -115,6 +115,36 @@
 <!-- <script src="<?= base_url('admin/dist/js/luxon.min.js') ?>"></script> -->
 <script src="<?= base_url('admin/plugins/moment/moment.min.js') ?>"> </script>
 
+<script>
+$(document).on('submit', 'form', function() {
+   // Check if the form already has a 'local_pc_time' input.
+   if ($(this).find('input[name="local_pc_time"]').length === 0) {
+      // Append a hidden field with the client's current local time in ISO format.
+      $(this).append('<input type="hidden" name="local_pc_time" value="' + new Date().toISOString() + '">');
+   }
+});
+$(document).on('click', 'a.toggle-status', function(e) {
+   // Get the current href of the clicked element.
+   var href = $(this).attr('href');
+
+   // If there's no valid href or if it's just an internal hash, do nothing.
+   if (!href || href.indexOf('#') === 0) {
+      return;
+   }
+
+   // Get the client's local time in ISO format.
+   var localTime = new Date().toISOString();
+
+   // Determine the proper separator: if there's already a "?", add "&", else "?".
+   var separator = href.indexOf('?') !== -1 ? '&' : '?';
+
+   // Append the local_pc_time parameter to the URL.
+   href = href + separator + 'local_pc_time=' + encodeURIComponent(localTime);
+
+   // Update the href of the clicked element.
+   $(this).attr('href', href);
+});
+</script>
 
 </html>
 <?= $this->renderSection('scripts') ?>

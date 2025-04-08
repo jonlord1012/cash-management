@@ -102,9 +102,9 @@ if (!function_exists('getSourceNameByCode')) {
    {
       if ($sourceCode === NULL) return false;
 
-      $sourceModel = new \App\Models\SourceModel();
+      $sourceModel = new \App\Models\BranchModel();
       $sourceName = $sourceModel->where('bank_code', $sourceCode)->first();
-      return $sourceName ? $sourceName['bank_name'] : 'N/A';
+      return $sourceName ? $sourceName['name'] : 'N/A';
    }
 }
 

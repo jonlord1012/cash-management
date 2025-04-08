@@ -3,7 +3,7 @@
 <div class="card">
    <div class="card-header">
       <h3 class="card-title">Banks Management</h3>
-      <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addBankModal">
+      <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#editBankModal">
          <i class="fas fa-plus"></i> Add Bank
       </button>
    </div>
@@ -70,6 +70,7 @@
                   <label>Bank Code</label>
                   <input type="text" name="bank_code" class="form-control" id="modal-input-bank-code" required>
                   <input type="hidden" name="form_mode" class="form-control" id="modal-form-mode" required>
+                  <!-- FORM MODE -->
                </div>
 
                <div class="form-group">
@@ -158,9 +159,9 @@ $(document).ready(function() {
          {
             data: 'is_active',
             render: function(data, type, row) {
-               return data ?
-                  '<span class="badge bg-success">Active</span>' :
-                  '<span class="badge bg-danger">Inactive</span>';
+               return data === '1' ?
+                  '<span class="badge btn-block bg-success">Active</span>' :
+                  '<span class="badge btn-block bg-danger">Inactive</span>';
             }
          },
          {
@@ -176,9 +177,10 @@ $(document).ready(function() {
             data: null,
             orderable: false,
             render: function(data, type, row) {
-               return `
-                     <a href="${row.toggle_url}" class="btn btn-sm btn-${row.is_active ? 'warning' : 'success'}">
-                ${row.is_active ? 'Deactivate' : 'Activate'}
+
+               return ` 
+                     <a href="${row.toggle_url}" class="btn btn-sm bg-${row.is_active ==="1"? 'secondary' : 'info'} toggle-status">
+                ${row.is_active ==="0" ?'<i class="fas fa-eye"> </i>': '<i class="fas fa-eye-slash"> </i>'  }
                      </a>
                      <a href="#"
                         class="btn btn-sm btn-primary editButton"
@@ -194,6 +196,7 @@ $(document).ready(function() {
                         data-bank_address="${row.bank_address}">
                         <i class="fas fa-edit"></i>
             </a>
+            <a href="${row.delete_url}" class="btn btn-sm btn-danger deleteButton"><i class="fas fa-trash"></i></a>
                     `;
             }
          }
@@ -246,7 +249,8 @@ $(document).ready(function() {
       responsive: true,
       pageLength: 20,
       order: [
-         [1, 'ASC']
+         [1, 'ASC'],
+         [3, 'ASC']
       ],
       columnDefs: [{
             orderable: false,

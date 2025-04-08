@@ -57,6 +57,13 @@ class Banks extends BaseController
       return view('admin/bank_create', $data);
    }
 
+   public function delete($code)
+   {
+      if ($this->model->deleteBank($code, $this->userLogin)) {
+         return redirect()->back()->with('success', 'Bank status updated');
+      }
+      return redirect()->back()->with('error', 'Failed to update bank status');
+   }
    public function save()
    {
 
@@ -70,25 +77,27 @@ class Banks extends BaseController
          'bank_account_no' => 'required|max_length[50]',
          'bank_account_name' => 'required|max_length[255]',
          'bank_address' => 'required|max_length[255]',
-
       ]);
 
       if (!$validation) {
          return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
       }
 
-      $mode = $this->request->getPost('form_mode') ?? 'create';
+      $mode = $this->request->getPost('form_mode');
+      if ($mode === '' || $mode === null) {
+         $mode = 'create';
+      }
 
       $data = [
          'branch_code' => $this->request->getPost('branch_code'),
-         'bank_code' => $this->request->getPost('bank_code'),
-         'bank_name' => $this->request->getPost('bank_name'),
+         'bank_code' => strtoupper($this->request->getPost('bank_code')),
+         'bank_name' => strtoupper($this->request->getPost('bank_name')),
          'account_code' => $this->request->getPost('account_code'),
-         'bank_account_no' => $this->request->getPost('bank_account_no'),
+         'bank_account_no' => strtoupper($this->request->getPost('bank_account_no')),
          'bank_account_name' => $this->request->getPost('bank_account_name'),
-         'bank_address' => $this->request->getPost('bank_address'),
+         'bank_address' => strtoupper($this->request->getPost('bank_address')),
          'is_active' => $this->request->getPost('is_active') ?? 1,
-         'update_user' => $this->userLogin,
+         'update_user' => strtolower($this->userLogin),
       ];
 
       try {
@@ -99,7 +108,7 @@ class Banks extends BaseController
          } else {
             return $this->response->setStatusCode(500)->setJSON([
                'status' => 'error',
-               'message' => 'Database error: Undifined mode',
+               'message' => 'Database error: Undefined mode',
             ]);
          }
          return $this->response->setJSON([
@@ -129,6 +138,7 @@ class Banks extends BaseController
       }
       return redirect()->back()->with('error', 'Failed to update bank status');
    }
+
    public function edit($code)
    {
       $bank = $this->model->find($code);
