@@ -4,7 +4,7 @@
 <!-- FILTERING -->
 <div class="card">
    <div class="card-header">
-      <h3 class="card-title">Kas dari Penjualan Aktiva</h3>
+      <h3 class="card-title">Aktiva Tetap</h3>
    </div>
 
    <div class="card-body">
@@ -63,7 +63,7 @@
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
                     <h6 class="text-white-50 font-weight-light">TOTAL RINCIAN CASH FLOW</h6>
-                    <h3 class="font-weight-bold">Rp. 117,000,000</h3>
+                    <h3 class="font-weight-bold">Rp. 1,005,882,733</h3>
                 </div>
                 <div>
                     <i class="fas fa-coins text-lg text-white-50"></i>
@@ -75,8 +75,8 @@
    <div class="card">
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
-                    <h6 class="text-black-50 font-weight-light">KAS YANG DITERIMA DARI PENJUALAN AKTIVA TETAP</h6>
-                    <h3 class="font-weight-bold">Rp. 117,000,000</h3>
+                    <h6 class="text-black-50 font-weight-light">KAS DIBAYAR UNTUK PEMBELIAN AKTIVA TETAP</h6>
+                    <h3 class="font-weight-bold">Rp. 1,005,882,733</h3>
                 </div>
                 <div>
                     <i class="fas fa-coins text-lg text-black-50"></i>
@@ -92,31 +92,30 @@
    <div class="card-header">
       <h3 class="card-title">Rincian</h3>
    </div>
-   <!-- /.card-header -->
    <div class="card-body">
-      <table id="table-detail" class="table table-bordered table-striped">
+      <?php if (session()->getFlashdata('success')): ?>
+      <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+      <?php endif; ?>
+      <?php if (session()->getFlashdata('error')): ?>
+      <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+      <?php endif; ?>
+      <table class="table table-bordered" id="dataGrid">
          <thead>
             <tr>
-					<th>Tanggal</th>
-					<th>Cabang</th>
-					<th>Keterangan</th>
-					<th>Amount</th>
-					<th>Ke Bank</th>
+               <th>Tanggal</th>
+               <th>Cabang</th>
+               <th>Reference</th>
+               <th>Note</th>
+               <th>Total</th>
+               <th>Source</th>
             </tr>
          </thead>
          <tbody>
-            <tr>
-               <td>25-01-07</td>
-               <td>JLS</td>
-               <td>UANG JUAL MOBIL INOVA</td>
-               <td>117,000,000.00</td>
-					<td>BNI 913</td>
-            </tr>
          </tbody>
-			<tfoot>
+         <tfoot>
             <tr>
-               <th colspan="4" class="text-right">Total Bulanan :</th>
-               <th id="totalMonthly">117,000,000.00</th>
+               <th colspan="5" class="text-right">Total Bulanan :</th>
+               <th id="totalMonthly">791,324,968.00</th>
             </tr>
          </tfoot>
       </table>
@@ -224,25 +223,161 @@ $(function() {
       });
    });
 
-   // table
-   $("#table-detail").DataTable({
-      "responsive": true,
-      "autoWidth": false,
-      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-      "order": [[0, "asc"]],
-      "language": {
-         "search": "Cari Data: _INPUT_",
-         "searchPlaceholder": "Cari...",
-         "lengthMenu": "Tampilkan _MENU_ entri",
-			"info": "_START_ s.d. _END_ dari _TOTAL_ data",
-         "paginate": {
-            "first": "Pertama",
-            "last": "Terakhir",
-            "next": "Selanjutnya",
-            "previous": "Sebelumnya"
-         },
-      },
-   });
+   // Table Detail
+   // $('#dataGrid').DataTable({
+   //    processing: true,
+   //    serverSide: true,
+   //    /*buttons: ['colvis', 'excel', 'pdf'], // Add explicit button list*/
+   //    ajax: {
+   //       url: '<?= site_url('admin/banks/grid') ?>',
+   //       type: 'GET'
+   //    },
+   //    columns: [{
+   //          data: 'branch_code'
+   //       },
+   //       {
+   //          data: 'name'
+   //       },
+   //       {
+   //          data: 'bank_code'
+   //       },
+   //       {
+   //          data: 'bank_name'
+   //       },
+   //       {
+
+   //          data: null,
+   //          render: function(data, type, row) {
+   //             return data.account_code + " -  " + data.account_name;
+   //          }
+
+   //       },
+   //       {
+   //          data: 'bank_account_no'
+   //       },
+   //       {
+   //          data: 'bank_account_name'
+   //       },
+   //       {
+   //          data: 'bank_address'
+   //       },
+   //       {
+   //          data: 'is_active',
+   //          render: function(data, type, row) {
+   //             return data === '1' ?
+   //                '<span class="badge btn-block bg-success">Active</span>' :
+   //                '<span class="badge btn-block bg-danger">Inactive</span>';
+   //          }
+   //       },
+   //       {
+   //          data: 'update_date',
+   //          render: function(data) {
+   //             return moment(data).format('DD/MM/YYYY HH:mm');
+   //          }
+   //       },
+   //       {
+   //          data: 'update_user_name'
+   //       },
+   //       {
+   //          data: null,
+   //          orderable: false,
+   //          render: function(data, type, row) {
+
+   //             return ` 
+   //                   <a href="${row.toggle_url}" class="btn btn-sm bg-${row.is_active ==="1"? 'secondary' : 'info'} toggle-status">
+   //              ${row.is_active ==="0" ?'<i class="fas fa-eye"> </i>': '<i class="fas fa-eye-slash"> </i>'  }
+   //                   </a>
+   //                   <a href="#"
+   //                      class="btn btn-sm btn-primary editButton"
+   //                      data-toggle="modal" data-target="#editBankModal"
+   //                      data-id="${row.id}"
+   //                      data-branch_code="${row.branch_code}"
+   //                      data-bank_code="${row.bank_code}"
+   //                      data-bank_name="${row.bank_name}"
+   //                      data-account_code="${row.account_code}"
+   //                      data-account_name="${row.account_name}"
+   //                      data-bank_account_no="${row.bank_account_no}"
+   //                      data-bank_account_name="${row.bank_account_name}"
+   //                      data-bank_address="${row.bank_address}">
+   //                      <i class="fas fa-edit"></i>
+   //          </a>
+   //          <a href="${row.delete_url}" class="btn btn-sm btn-danger deleteButton"><i class="fas fa-trash"></i></a>
+   //                  `;
+   //          }
+   //       }
+   //    ],
+   //    dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
+   //       "<'row'<'col-sm-12'tr>>" +
+   //       "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+
+   //    buttons: [{
+   //          extend: 'colvis',
+   //          text: 'Columns'
+   //       },
+   //       {
+   //          extend: 'excelHtml5',
+   //          text: 'Excel',
+   //          className: 'btn-success',
+   //          action: function(e, dt, node, config) {
+   //             // Get current search/filter values
+   //             const searchValue = dt.search();
+   //             const order = dt.order();
+
+   //             // Create export URL with parameters
+   //             const exportUrl = new URL('<?= site_url('admin/banks/export/excel') ?>', window
+   //                .location.href);
+   //             exportUrl.searchParams.set('search', searchValue);
+   //             exportUrl.searchParams.set('order', JSON.stringify(order));
+
+   //             // Trigger download
+   //             window.location = exportUrl.href;
+   //          }
+   //       },
+   //       {
+   //          extend: 'pdfHtml5',
+   //          text: 'PDF',
+   //          className: 'btn-danger',
+   //          action: function(e, dt, node, config) {
+   //             const searchValue = dt.search();
+   //             const order = dt.order();
+
+   //             const exportUrl = new URL('<?= site_url('admin/banks/export/pdf') ?>', window.location
+   //                .href);
+   //             exportUrl.searchParams.set('search', searchValue);
+   //             exportUrl.searchParams.set('order', JSON.stringify(order));
+
+   //             window.location = exportUrl.href;
+   //          }
+   //       }
+   //    ],
+   //    colReorder: true,
+   //    responsive: true,
+   //    pageLength: 20,
+   //    order: [
+   //       [1, 'ASC'],
+   //       [3, 'ASC']
+   //    ],
+   //    columnDefs: [{
+   //          orderable: false,
+   //          targets: [10]
+   //       } // Disable sorting for action column
+   //    ]
+   // });
+   // Table Event
+   // $('#dataGrid').on('click', '.editButton', function() {
+   //    const data = $(this).data();
+   //    $('#modal-input-id').val(data.id);
+   //    $('#modal-input-branch-code').val(data.branch_code);
+   //    $('#modal-input-bank-code').val(data.bank_code);
+   //    $('#modal-form-mode').val('edit');
+   //    $('#modal-input-bank-name').val(data.bank_name);
+   //    $('#modal-input-account-code').val(data.account_code);
+   //    $('#accountName').val(data.account_name);
+   //    $('#modal-input-bank-account-no').val(data.bank_account_no);
+   //    $('#modal-input-bank-account-name').val(data.bank_account_name);
+   //    $('#modal-input-bank-address').val(data.bank_address);
+
+   // });
 });
 </script>
 <?= $this->endSection() ?>

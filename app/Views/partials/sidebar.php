@@ -8,7 +8,7 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
             <li class="nav-item">
                <a href="<?= site_url('dashboard') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <i class="nav-icon fas fa-chart-line"></i>
                   <p>Dashboard</p>
                </a>
             </li>
@@ -16,7 +16,7 @@
             <li class="nav-header">ACCOUNTING</li>
             <li class="nav-item">
                <a href="<?= site_url('accounting/transaction') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                  <i class="nav-icon fas fa-money-check-alt"></i>
                   <p>Journal Entries</p>
                </a>
             </li>
@@ -60,7 +60,7 @@
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+               <a href="<?= site_url('reports/aktiva_tetap') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Aktiva Tetap</p>
                </a>
@@ -108,19 +108,19 @@
 
             <li class="nav-item">
                <a href="<?= site_url('/admin/coa') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                  <i class="nav-icon fas fa-user-tie"></i>
                   <p>COA</p>
                </a>
             </li>
             <li class="nav-item">
                <a href="<?= site_url('/admin/banks/') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                  <i class="nav-icon fas fa-landmark"></i>
                   <p>Banks</p>
                </a>
             </li>
             <li class="nav-item">
                <a href="<?= site_url('/admin/branches/') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                  <i class="nav-icon fas fa-hotel"></i>
                   <p>Branches</p>
                </a>
             </li>
@@ -147,20 +147,20 @@
             <li class="nav-header">SYSTEM</li>
             <li class="nav-item">
                <a href="<?= site_url('/admin/users/') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                  <i class="nav-icon fas fa-users"></i>
                   <p>User Management</p>
                </a>
             </li>
             <li class="nav-item">
                <a href="<?= site_url('/admin/audit-logs/') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                  <i class="nav-icon fas fa-clipboard-list"></i>
                   <p>Audit Logs</p>
                </a>
             </li>
             <li class="nav-item">
                <a href="<?= site_url('logout') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>LogOut</p>
+                  <i class="nav-icon fas fa-sign-out-alt"></i>
+                  <p>Sign Out</p>
                </a>
             </li>
          </ul>
