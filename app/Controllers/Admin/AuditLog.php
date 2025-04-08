@@ -2,23 +2,23 @@
 
 namespace App\Controllers\Admin;
 
-use App\Controllers\BaseController;
-use App\Models\ActivityModel;
+use App\Models\AuditLogModel;
+use CodeIgniter\Controller;
 
-class AuditLog extends BaseController
+class AuditLogs extends Controller
 {
-   protected $model;
-
    public function index()
    {
-      $model = new ActivityModel();
-      $data = [
-         'title' => 'Audit Logs',
-         'logs' => $model->select('activity_logs.*, users.username')
-            ->join('users', 'users.username = activity_logs.username')
-            ->orderBy('create_date', 'DESC')
-            ->findAll()
-      ];
-      return view('admin/audit_logs', $data);
+      // Render the audit log view.
+      return view('audit_logs/index');
+   }
+
+   // This method serves JSON data for the DataTables AJAX call.
+   public function list()
+   {
+      $auditModel = new AuditLogModel();
+      $logs = $auditModel->orderBy('execution_timestamp', 'DESC')->findAll();
+
+      return $this->response->setJSON(['data' => $logs]);
    }
 }

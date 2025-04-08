@@ -12,23 +12,29 @@ class Auth extends BaseConfig
          '*', // Superadmin has access to all routes
       ],
       'ho_accountant' => [
-         'accounting/*',
-         'reports/*',
+         '/accounting/*',
+         '/reports/*',
       ],
       'branch_accountant' => [
-         'logout',
-         'admin/branches',
-         'admin/branches/*',
-         'accounting/journal',
-         'reports/branch',
+         '/login',
+         '/logout',
+         '/dashboard',
+         '/unauthorized',
+         '/global',
+         '/admin/branches',
+         '/admin/branches/*',
+         '/accounting*/*',
+         '/reports*/*',
+         '/Admin/ZReports',
+         '/admin/getcoa*/*',
       ],
       'auditor' => [
-         'reports/*',
+         '/reports/*',
       ],
       'guest' => [
-         'login', // Allow guests to access the login page
-         'logout', // Allow guests to access the logout route
-         'unauthorized', // Allow guests to access the unauthorized page
+         '/login', // Allow guests to access the login page
+         '/logout', // Allow guests to access the logout route
+         '/unauthorized', // Allow guests to access the unauthorized page
       ],
    ];
 

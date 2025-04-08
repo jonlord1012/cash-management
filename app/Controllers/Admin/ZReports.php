@@ -375,7 +375,7 @@ class ZReports extends BaseController
 
       return $this->response->setJSON(array_map(function ($item) {
          return [
-            'group_code' => $item['report_code'],
+            'group_code' => $item['group_code'],
             'group_name' => $item['group_name'],
             'value' => $item['group_code'],
             'label' => $item['group_code'] . ' - ' . $item['group_name']

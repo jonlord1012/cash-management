@@ -12,7 +12,9 @@
       <?php if (session()->getFlashdata('success')): ?>
       <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
       <?php endif; ?>
-
+      <?php if (session()->getFlashdata('error')): ?>
+      <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+      <?php endif; ?>
       <table class="table table-bordered">
          <thead>
             <tr>
@@ -48,7 +50,8 @@
                      class="btn btn-sm btn-<?= $branch['is_active'] ? 'warning' : 'success' ?>">
                      <?= $branch['is_active'] ? 'Deactivate' : 'Activate' ?>
                   </a>
-                  <a href="<?= site_url('admin/branches/edit/' . $branch['id']) ?>" class="btn btn-sm btn-primary mr-1">
+                  <a href="<?= site_url('admin/branches/edit/' . $branch['branch_code']) ?>"
+                     class="btn btn-sm btn-primary mr-1">
                      <i class="fas fa-edit"></i>
                   </a>
                </td>

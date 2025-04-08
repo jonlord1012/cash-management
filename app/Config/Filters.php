@@ -25,6 +25,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'auth' => \App\Filters\AuthFilter::class,
+        'sanitize' => \App\Filters\AuthFilter::class,
     ];
 
     /**
@@ -38,13 +39,22 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+
             'auth' => [
                 'except' => [
                     'login',
                     'login/*',
                     '/'
                 ]
-            ]
+            ],
+            'sanitize' => [
+                'except' => [
+                    'login',
+                    'login/*',
+                    '/'
+                ]
+            ],
+
         ],
         'after' => [
             'toolbar',

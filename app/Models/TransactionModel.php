@@ -2,13 +2,21 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class TransactionModel extends Model
+class TransactionModel extends BaseModel
 {
    protected $table = 'tr_cash_flow';
    protected $useAutoIncrement = false;
    protected $primaryKey = 'ref_no';
+
+   protected $createdField = 'create_date';
+   protected $updatedField = 'update_date';
+   protected $returnType     = 'array';
+
+   // Register callbacks for audit logging.
+   protected $afterInsert = ['auditAfterInsert'];
+   protected $afterUpdate = ['auditAfterUpdate'];
+   protected $afterDelete = ['auditAfterDelete'];
+
    protected $allowedFields = [
       'ref_no',
       'branch_code',
@@ -57,27 +65,5 @@ class TransactionModel extends Model
 
       $refNo = $branch_code . $currentYear . $currentMonth . $formattedCounter;
       return $refNo;
-   }
-
-   public function saveWithEntries($transactionData, $entries)
-   {
-      $this->db->transStart();
-
-      // Save transaction
-      $transactionId = $this->insert($transactionData);
-
-      // Save ledger entries
-      $ledgerModel = new LedgerEntryModel();
-      foreach ($entries as $entry) {
-         $ledgerModel->insert([
-            'transaction_id' => $transactionId,
-            'coa_id' => $entry['coa_id'],
-            'amount' => $entry['amount'],
-            'type' => $entry['type']
-         ]);
-      }
-
-      $this->db->transComplete();
-      return $this->db->transStatus();
    }
 }

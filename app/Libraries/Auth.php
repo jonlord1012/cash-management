@@ -39,7 +39,7 @@ class Auth
       return false;
    }
 
-   public function hasAccess($userGroup, $routeOptions)
+   public function hasAccess($userGroup, $currentUri, $routeOptions = [])
    {
       $config = config('Auth');
 
@@ -51,15 +51,16 @@ class Auth
       $allowedRoutes = $config->permissions[$userGroup] ?? [];
 
       foreach ($allowedRoutes as $allowedRoute) {
-         if (fnmatch($allowedRoute, $routeOptions)) return true;
+         if (fnmatch($allowedRoute, $currentUri)) return true;
+         #return in_array($userGroup, (array)$routeOptions['permission']);
       }
 
-      /*
+
       // Check route permissions
       if (isset($routeOptions['permission'])) {
          return in_array($userGroup, (array)$routeOptions['permission']);
       }
-      */
+
 
       // Default deny access
       return false;

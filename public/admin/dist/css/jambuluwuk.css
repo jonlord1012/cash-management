@@ -123,6 +123,15 @@
    padding: 0 0.5rem 0 0;
 }
 
+.invalid-feedback {
+   color: #dc3545;
+   font-size: 0.875em;
+}
+
+.is-invalid {
+   border-color: #dc3545 !important;
+}
+
 @media screen and (max-width: 767px) {
    .table-responsive {
       width: 100%;

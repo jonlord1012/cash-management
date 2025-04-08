@@ -7,7 +7,9 @@ use CodeIgniter\Model;
 class BranchModel extends Model
 {
    protected $table = 'branches';
-   protected $primaryKey = 'id';
+
+   protected $useAutoIncrement = false;
+   protected $primaryKey = 'branch_code';
    protected $allowedFields = [
       'branch_code',
       'name',
@@ -25,6 +27,11 @@ class BranchModel extends Model
    protected $createdField = 'create_date';
    protected $updatedField = 'update_date';
 
+   public function getAutocompleteData()
+   {
+      return $this->select('branch_code, name as branch_name')->findAll();
+   }
+
    public function toggleStatus($id, $userLogin)
    {
 
@@ -33,7 +40,7 @@ class BranchModel extends Model
          log_message('error', "Branch ID {$id} not found");
          return false;
       }
-      $newStatus = $branch['is_active'] ? 0 : 1;
+      $newStatus = $branch['is_active'] ?? 0;
       log_message('debug', "Changing status for branch ID {$id} from {$branch['is_active']} to {$newStatus}");
 
       $result = $this->update($id, [

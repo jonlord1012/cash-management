@@ -7,7 +7,9 @@ use CodeIgniter\Model;
 class CoaModel extends Model
 {
    protected $table = 'coa';
-   protected $primaryKey = 'id';
+
+   protected $useAutoIncrement = false;
+   protected $primaryKey = 'account_code';
    protected $allowedFields = [
       'account_code',
       'account_name',

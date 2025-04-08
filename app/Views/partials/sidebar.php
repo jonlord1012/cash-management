@@ -113,6 +113,12 @@
                </a>
             </li>
             <li class="nav-item">
+               <a href="<?= site_url('/admin/banks/') ?>" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Banks</p>
+               </a>
+            </li>
+            <li class="nav-item">
                <a href="<?= site_url('/admin/branches/') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Branches</p>

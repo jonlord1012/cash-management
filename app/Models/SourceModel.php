@@ -10,6 +10,18 @@ class SourceModel extends Model
    protected $idKey = 'id';
    protected $primaryKey = 'bank_code';
 
+   protected $useAutoIncrement = false;
+
+   protected $createdField = 'create_date';
+   protected $updatedField = 'update_date';
+   protected $returnType     = 'array';
+
+   // Register callbacks for audit logging.
+   protected $afterInsert = ['auditAfterInsert'];
+   protected $afterUpdate = ['auditAfterUpdate'];
+   protected $afterDelete = ['auditAfterDelete'];
+
+
    protected $allowedFields = [
       'branch_code',
       'bank_code',
@@ -24,6 +36,8 @@ class SourceModel extends Model
    ];
    public function getAutocompleteData($branch_code)
    {
+
+
       return $this->select('bank_code, bank_name')
          ->where('branch_code', $branch_code)
          ->findAll();

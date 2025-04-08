@@ -35,7 +35,7 @@
                         '<span class="badge bg-success">Active</span>' :
                         '<span class="badge bg-danger">Inactive</span>' ?>
                </td>
-               <!-- <td><?= $user['last_login'] ? date('d/m/Y H:i', strtotime($user['last_login'])) : 'Never' ?></td> -->
+
                <td></td>
                <td>
                   <button class="btn btn-sm btn-warning edit-user" data-id="<?= $user['id'] ?>"
