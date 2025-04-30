@@ -43,6 +43,52 @@ class Transaction extends BaseController
       return view('accounting/view_transaction', $data);
    }
 
+   public function getBranches()
+   {
+      $term = $this->request->getGet('term');
+      $branchModel = new \App\Models\BranchModel();
+
+      $results = $branchModel->select()
+         ->like('branch_code', $term)
+         ->orLike('short_name', $term)
+         ->orLike('name', $term)
+         ->limit(10)
+         ->findAll();
+
+      return $this->response->setJSON(array_map(function ($item) {
+         return [
+            'branch_code' => $item['branch_code'],
+            'name' => $item['name'],
+            'short_name' => $item['short_name'],
+            'value' => $item['branch_code'],
+            'label' => $item['branch_code'] . ' - ' . $item['short_name']
+         ];
+      }, $results));
+   }
+
+   public function getPeriode()
+   {
+      $term = $this->request->getGet('term');
+      log_message('debug', 'Periode Search Term: ' . $term);
+      $periodeModel = new TransactionModel();
+
+      $results = $periodeModel->select("DATE_FORMAT(transaction_date,'%Y%m') as periode_code")
+         ->like("DATE_FORMAT(transaction_date,'%Y%m')", $term)
+         ->groupBy("DATE_FORMAT(transaction_date,'%Y%m')")
+         ->limit(10)
+         ->findAll();
+      log_message('debug', 'Periode Results: ' . print_r($results, true));
+      #return ($results);
+      return $this->response->setJSON(array_map(function ($item) {
+         return [
+            'periode_code' => $item['periode_code'],
+            'value' => $item['periode_code'],
+            'label' => $item['periode_code'],
+            'debug' => print_r($item, true)
+         ];
+      }, $results));
+   }
+
    public function getCoa()
    {
       $term = $this->request->getGet('term');
@@ -88,19 +134,6 @@ class Transaction extends BaseController
          ->limit(10)
          ->findAll();
 
-      #$results = $builder->get()->getResultArray();
-      #print_r($builder->getLastQuery()->getQuery());
-      #die();
-
-      /*$results = $bankModel->select('bank_code, name as bank_name')
-         ->where('branch_code', $this->branchCode)
-         ->groupStart()
-         ->like('bank_code', $term)
-         ->orLike('name', $term)
-         ->groupEnd()
-         ->limit(10)
-         ->findAll();
-      */
       return $this->response->setJSON(array_map(function ($item) {
          return [
             'bank_code' => $item['bank_code'],

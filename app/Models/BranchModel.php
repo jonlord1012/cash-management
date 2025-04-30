@@ -12,6 +12,7 @@ class BranchModel extends Model
    protected $primaryKey = 'branch_code';
    protected $allowedFields = [
       'branch_code',
+      'short_name',
       'name',
       'is_head_office',
       'is_active',

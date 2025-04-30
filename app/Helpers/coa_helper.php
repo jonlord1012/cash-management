@@ -162,4 +162,18 @@ if (!function_exists('format_currency')) {
       // Negative values in parentheses
       return $number < 0 ? "({$formatted})" : $formatted;
    }
+   function formatDate($date)
+   {
+      return $date ? date('d M Y', strtotime($date)) : '-'; // example: 2025-04-28 → 28 Apr 2025
+   }
+
+   function formatDateTime($datetime)
+   {
+      return $datetime ? date('d M Y H:i', strtotime($datetime)) : '-'; // example: 2025-04-28 14:30
+   }
+
+   function formatPostedStatus($isPosted)
+   {
+      return $isPosted ? '<span style="color:green;font-weight:bold;">✅ Posted</span>' : '<span style="color:red;font-weight:bold;">❌ Unposted</span>';
+   }
 }

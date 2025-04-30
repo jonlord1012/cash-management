@@ -90,6 +90,8 @@ $routes->group('accounting', ['filter' => 'auth'], function ($routes) {
    # Utilities
    $routes->get('getcoa', 'Accounting\Transaction::getCoa');
    $routes->get('getbanks', 'Accounting\Transaction::getBanks');
+   $routes->get('getbranches', 'Accounting\Transaction::getBranches');
+   $routes->get('getperiodes', 'Accounting\Transaction::getPeriode');
 });
 
 /* REPORTS */
@@ -97,7 +99,11 @@ $routes->group('reports', ['filter' => 'auth'], function ($routes) {
    $routes->get('/', 'Reports\AccountingReports::summaryReport');
    $routes->get('summary_report', 'Reports\AccountingReports::summaryReport');
    $routes->get('cash_bank', 'Reports\AccountingReports::getCashBankReport');
+   #$routes->get('cash_bank/grid', 'Reports\AccountingReports::renderDataGridforCashBank');
+   $routes->get('cash_bank/grid', 'Reports\AccountingReports::renderDataGridforCashBank');
+   #$routes->post('cash_bank/grid', 'Reports\AccountingReports::renderDataGridforCashBank');
    $routes->get('arus_kas_breakdown', 'Reports\AccountingReports::getArusKasBreakdown');
+   $routes->get('export_arus_kas', 'Reports\AccountingReports::getArusKasBreakdown');
    $routes->get('kas_penjualan_aktiva', 'Reports\AccountingReports::getKasPenjualanAktiva');
    $routes->get('aktiva_tetap', 'Reports\AccountingReports::getAktivaTetap');
    $routes->get('hutang_bank', 'Reports\AccountingReports::hutangBank');

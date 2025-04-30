@@ -93,6 +93,7 @@
                   <th>Report Code</th>
                   <th>Group </th>
                   <th>Account</th>
+                  <th>Account Name</th>
                   <th>is Debit</th>
                   <th>is Active</th>
 
