@@ -58,7 +58,7 @@
 
                   if ($day >= 1 && $day <= $days_in_month) {
                      $group_daily_total[$account_code][$day] = $transaction['total'];
-                     $group_per_account[$group['group_code']][$day] += $transaction['total'];
+                     $group_per_account[$group['group_code']][$day] += abs($transaction['total']);
                   }
                }
             }

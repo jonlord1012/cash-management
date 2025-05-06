@@ -36,13 +36,14 @@ class ReportsModel extends Model
          $builder->where('transaction_date >=', $startDate)
             ->where('transaction_date <=', $endDate);
       }
+      $builder->orderBy('transaction_date', 'ASC');
 
       return $builder->get()->getResultArray();
    }
 
    public function getDailyCashFlowJSON($period, $branch_code)
    {
-      $date = \DateTime::createFromFormat('F Y', $period);
+      $date = \DateTime::createFromFormat('Ym', $period);
       $startDate = $date->format('Y-m-01');
       $endDate = $date->format('Y-m-t');
 
@@ -249,9 +250,12 @@ class ReportsModel extends Model
    {
       $columns = $this->getDataGridColumnsforCashBank();
       $builder = $this->db->table('vw_grid_cash_bank');
-
-      // Get total record count BEFORE filtering
-      $totalRecords = $builder->countAllResults(false);
+      $builder->select("*, 
+    (SELECT SUM(t2.debit - t2.credit) 
+     FROM vw_grid_cash_bank t2 
+     WHERE t2.account_code = vw_grid_cash_bank.account_code 
+     AND DATE_FORMAT(t2.transaction_date, '%Y-%m') = DATE_FORMAT(vw_grid_cash_bank.transaction_date, '%Y-%m')
+     AND t2.transaction_date <= vw_grid_cash_bank.transaction_date) as running_balance");
 
 
       if (!empty($branchCode)) {
@@ -266,6 +270,9 @@ class ReportsModel extends Model
          $builder->where('periode_code', $periodeCode);
       }
 
+      // Get total record count BEFORE filtering
+      $totalRecords = $builder->countAllResults(false);
+      $builder->orderBy('account_code, transaction_date', 'ASC');
 
       // --- Filters ---
       if (!empty($search)) {
@@ -290,7 +297,7 @@ class ReportsModel extends Model
       }
       // --- Fetch Data ---
       $results = $builder->get()->getResultArray();
-
+      /*
       // --- Format the Result ---
       $data = array_map(function ($row) {
          $updateUser = $row['update_user'] ?? $row['create_user'];
@@ -299,6 +306,7 @@ class ReportsModel extends Model
          $debit = floatval($row['debit'] ?? 0);
          $credit = floatval($row['credit'] ?? 0);
          $endingBalance = $beginningBalance + $debit - $credit ?? 0;
+         $runningBalance = floatval($row['running_balance']) ??0;
 
          return [
             'transaction_date' => ($row['transaction_date']),
@@ -314,21 +322,70 @@ class ReportsModel extends Model
             'begining_balance' => format_currency($beginningBalance),
             'debit' => format_currency($debit),
             'credit' => format_currency($credit),
-            'ending_balance' => format_currency($endingBalance),
+            'ending_balance' => format_currency($runningBalance),
             'is_posted' => formatPostedStatus($row['is_posted']),
             'update_date' => formatDateTime($row['update_date'] ?? $row['create_date']),
             'update_user_name' => $updateUserName,
          ];
       }, $results);
-      return ($data);
+      #return ($data);
+*/
+
+      // --- Calculate Running Balances ---
+      $runningBalances = []; // To track balances per account per month
+      $formattedData = [];
+
+      foreach ($results as $row) {
+         $accountCode = $row['account_code'];
+         $monthYear = date('Y-m', strtotime($row['transaction_date']));
+         $key = $accountCode . '_' . $monthYear;
+
+         // Initialize if this account/month combination hasn't been seen yet
+         if (!isset($runningBalances[$key])) {
+            $runningBalances[$key] = floatval($row['begining_balance'] ?? 0);
+         }
+
+         $debit = floatval($row['debit'] ?? 0);
+         $credit = floatval($row['credit'] ?? 0);
+
+         // Calculate current row's ending balance
+         $runningBalances[$key] += ($debit - $credit);
+         $endingBalance = $runningBalances[$key];
+
+         // Format user information
+         $updateUser = $row['update_user'] ?? $row['create_user'];
+         $updateUserName = !empty($updateUser) ? getUserNameByName($updateUser) : '-';
+
+         $formattedData[] = [
+            'month_year' => $monthYear,
+            'transaction_date' => $row['transaction_date'],
+            'branch_code' => $row['branch_code'],
+            'branch_name' => $row['branch_name'],
+            'short_name' => $row['short_name'],
+            'bank_code' => $row['bank_code'],
+            'bank_name' => $row['bank_name'],
+            'account_code' => $row['account_code'],
+            'account_name' => $row['account_name'],
+            'description' => $row['description'],
+            'doc_no' => $row['doc_no'],
+            'begining_balance' => format_currency(floatval($row['begining_balance'] ?? 0)),
+            'debit' => format_currency($debit),
+            'credit' => format_currency($credit),
+            'ending_balance' => format_currency($endingBalance),
+            'is_posted' => formatPostedStatus($row['is_posted']),
+            'update_date' => formatDateTime($row['update_date'] ?? $row['create_date']),
+            'update_user_name' => $updateUserName,
+         ];
+      }
 
       // --- Return the data in DataTables format ---
-      return [
+      $data = [
          'draw' => intval($_POST['draw'] ?? 1),
          'recordsTotal' => $totalRecords,
          'recordsFiltered' => $filteredRecords,
-         'data' => $data,
+         'data' => $formattedData,
       ];
+      return ($data);
    }
 
 

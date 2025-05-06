@@ -20,7 +20,7 @@
                   <label>Source</label>
                   <!-- <input type="text" class="form-control autocomplete-source" name="bank_code" required> -->
                   <input type="text" class="form-control autocomplete-source" name="bank_code" id="bankCode"
-                     placeholder="Start typing bank code or name..." autocomplete="off" required>
+                     placeholder="Start typing bank code or name..." autocomplete="off">
                </div>
             </div>
 
@@ -29,7 +29,7 @@
                   <label>Periode</label>
                   <!-- <input type="text" class="form-control autocomplete-source" name="bank_code" required> -->
                   <input type="text" class="form-control autocomplete-periode" name="periode_code" id="periodeCode"
-                     placeholder="Start typing Periode..." autocomplete="off" required>
+                     placeholder="Start typing Periode..." autocomplete="off">
                </div>
             </div>
          </div>
@@ -81,6 +81,7 @@
                <th>Posted</th>
                <th>Update Date</th>
                <th>Update By</th>
+               <th class="hidden" hidden>month_year</th>
             </tr>
          </thead>
          <tbody>
@@ -99,22 +100,80 @@
 $(document).ready(function() {
    $('#perCashBankReport').on('submit', function(e) {
       e.preventDefault(); // stop actual submit
+      if (!$('#branchCode').val() && !$('#bankCode').val() && !$('#periodeCode').val()) {
+         alert('Please specify at least one filter (Branch, Bank, or Period)');
+         return;
+      }
       $('#dataGridCashBank').DataTable().ajax.reload(); // reload datatable with new filters
    });
 
    $('#dataGridCashBank').DataTable({
       processing: true,
       serverSide: true,
+      deferLoading: 0, // Don't load initially
       ajax: {
          "url": '<?= site_url('reports/cash_bank/grid') ?>',
          "type": "GET",
+         "timeout": 10000,
          "data": function(d) {
             // Add filters if necessary
             d.branchCode = $('#branchCode').val();
             d.bankCode = $('#bankCode').val();
             d.periodeCode = $('#periodeCode').val();
+
+            if (!d.branchCode && !d.bankCode && !d.periodeCode) {
+               $('#dataGridCashBank tbody').html(
+                  '<tr><td colspan="14" class="text-center text-muted">' +
+                  'Please specify at least one filter (Branch, Bank, or Period)' +
+                  '</td></tr>'
+               );
+               return false;
+            }
+         },
+         "dataSrc": function(json) {
+            // Handle both direct and nested responses
+            if (json.data && Array.isArray(json.data)) {
+               return json.data; // Direct response
+            } else if (json.data && json.data.data) {
+               return json.data.data; // Nested response
+            }
+            return [];
+         },
+         "error": function(xhr, error, thrown) {
+            if (error === 'timeout') {
+               alert('Server request timed out. Please try again with more specific filters.');
+            }
+            $('#dataGridCashBank').DataTable().processing(false);
+         },
+
+      },
+      drawCallback: function(settings) {
+         var api = this.api();
+         var rows = api.rows({
+            page: 'current'
+         }).nodes();
+         var last = null;
+
+         // Get the column by index instead of name
+         var monthYearColumn = api.column(14); // Use column index instead of name
+
+         if (typeof monthYearColumn !== 'undefined') {
+            monthYearColumn.data().each(function(group, i) {
+               if (last !== group) {
+                  $(rows).eq(i).before(
+                     '<tr class="group bg-gray-100"><td colspan="14" class="font-weight-bold">' +
+                     group + '</td></tr>'
+                  );
+                  last = group;
+               }
+            });
          }
       },
+      columnDefs: [{
+         targets: [14], // Index of the month_year column
+         visible: false,
+         searchable: true
+      }],
       columns: [{
             "data": "transaction_date"
          },
@@ -156,6 +215,9 @@ $(document).ready(function() {
          },
          {
             "data": "update_user_name"
+         },
+         {
+            "data": "month_year"
          }
       ],
       "language": {

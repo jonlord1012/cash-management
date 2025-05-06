@@ -5,6 +5,9 @@
             <i class="fas fa-bars"></i>
          </a>
       </li>
+      <li class="nav-item">
+         <h3>Branch Name : <?= getBranchNameByUserCode(session()->get('username'));  ?></h3>
+      </li>
    </ul>
 
    <ul class="navbar-nav ml-auto">

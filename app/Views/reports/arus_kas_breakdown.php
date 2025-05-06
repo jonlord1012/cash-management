@@ -7,11 +7,64 @@
       <h5 class="float-right">Periode: <?= htmlspecialchars($period) ?></h5>
    </div>
    <div class="card-header">
-      <form action="<?php echo site_url('/reports/export_arus_kas/'); ?>" method="get">
-         <input type="hidden" name="is_export" value="true" />
-         <button class="btn btn-warning" type="submit">Export Excel</button>
-      </form>
+      <div class="row">
+         <?php
+         $months =  [
+            '01' => 'January',
+            '02' => 'February',
+            '03' => 'March',
+            '04' => 'April',
+            '05' => 'May',
+            '06' => 'June',
+            '07' => 'July',
+            '08' => 'August',
+            '09' => 'September',
+            '10' => 'October',
+            '11' => 'November',
+            '12' => 'December'
+         ];
+         $years = range(date('Y') - 5, date('Y') + 1);
+         $month = date('m');
+         $year = date('Y');
+         ?>
+         <div class="col-sm-9 d-flex float-sm-left ">
+            <form method="get" class="form-inline " action="<?= site_url('/reports/arus_kas_breakdown'); ?>">
+               <div class="d-flex mr-3">
+                  <div class="d-flex">
+                     <select name="month" class="form-control">
+                        <?php foreach ($months as $key => $name): ?>
+                        <option value="<?= $key ?>" <?= $key == $pickedmonth ? 'selected' : '' ?>>
+                           <?= $name ?>
+                        </option>
+                        <?php endforeach; ?>
+                     </select>
+                  </div>
+               </div>
+               <div class="d-flex mr-3 ">
+                  <select name="year" class="form-control">
+                     <?php foreach ($years as $y): ?>
+                     <option value="<?= $y ?>" <?= $y == $pickedyear ? 'selected' : '' ?>>
+                        <?= $y ?>
+                     </option>
+                     <?php endforeach; ?>
+                  </select>
+               </div>
+               <div class="d-flex ">
+                  <button type="submit" class="btn btn-success btn-block "><i class="fa fa-passport">&nbsp;</i> <strong>
+                        Generate Report</strong></button>
+               </div>
+            </form>
+         </div>
+         <div class="col-sm-3 float-right">
+            <form class="form-inline float-right " action="<?php echo site_url('/reports/export_arus_kas/'); ?>"
+               method="get">
+               <input type="hidden" name="is_export" value="true" />
+               <button class="btn btn-warning" type="submit">Export Excel</button>
+            </form>
+         </div>
+      </div>
    </div>
+
 
    <div class="card-body">
       <?php if (empty($cash_flow_data)) : ?>
@@ -46,7 +99,7 @@
                <?php foreach ($cash_flow_data as $group): ?>
 
                <?php
-
+                     $group_per_account[$group['group_code']] = array_fill(1, $days_in_month, 0);
                      $group_daily_total = array_fill(1, $days_in_month, 0); // initialize daily totals
                      foreach ($group['account'] as $account) {
                         $account['flag'] ?? $printMe = true;
@@ -142,3 +195,16 @@
    </div>
 </div>
 <?= $this->endSection() ?>
+<?= $this->section('script'); ?>
+$(document).ready(function() {
+$('#arusKasBreakdownFilter').on('submit', function(e) {
+e.preventDefault(); // stop actual submit
+if (!$('#month').val() && !$('#year').val() ) {
+alert('Please specify filter (Year and Month)');
+return;
+}
+$('#dataGridCashBank').DataTable().ajax.reload(); // reload datatable with new filters
+});
+});
+
+<?= $this->endSection(); ?>

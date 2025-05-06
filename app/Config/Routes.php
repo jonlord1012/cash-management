@@ -16,6 +16,10 @@ $routes->get('logout', 'Login::logout');
 $routes->get('unauthorized', 'Login::unauthorized');
 $routes->get('global', 'Reports\AccountingReports::summaryReport');
 $routes->get('debug', 'Home::debug');
+$routes->set404Override(function () {
+   return view('unauthorized');
+});
+
 
 
 /* ADMIN */

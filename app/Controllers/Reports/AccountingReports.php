@@ -105,6 +105,8 @@ class AccountingReports extends BaseController
 
       // Fetch summary data
       $cashBankData = $this->model->getCashBankReport($branch_code, $bankCode, $startDate, $endDate);
+      foreach ($cashBankData as $monthly) {
+      }
 
       // Prepare data for the view
       $data = [
@@ -122,16 +124,23 @@ class AccountingReports extends BaseController
    {
       $period = 'May 2025'; // Should be dynamic in production
 
+
       $isExsport = $this->request->getGet('is_export') ?? "false";
       $myTime = $this->request->getGet('local_pc_time') ?? "false";
+      $year = $this->request->getGet('year') ?? date('Y');
+      $month = $this->request->getGet('month') ?? date('m');
+      $period = $year . $month;
+
       $myTime = substr($myTime, 0, 10);
+
       $branch_name = getBranchNameByUserCode($this->userLogin);
       $branch_code = getBranchCodeByUserCode($this->userLogin);
 
       $daysInMonth = (int) date('t', strtotime($period));
 
+      $pattern = '/^\d{6}$/';
       // Add validation
-      if (!preg_match('/^[A-Za-z]+ \d{4}$/', $period)) {
+      if (!preg_match($pattern, $period)) {
          return redirect()->back()->with('error', 'Format periode tidak valid');
       }
 
@@ -203,13 +212,15 @@ class AccountingReports extends BaseController
       $data = [
          'title' => 'Laporan Arus Kas (Breakdown)',
          'period' => $period,
+         'pickedyear' => $year,
+         'pickedmonth' => $month,
          'days_in_month' => $daysInMonth,
          'end_balance' => $end_balance,
          'branchName' => $branch_name,
          'branchCode' => $branch_code,
          'cash_flow_data' => $cash_flow_data ?: [],
          'start_balance' => array_sum(array_column($cash_flow_data, 'total')) ?? 0,
-         'end_balance' => 0 // Add your closing balance logic
+         'end_balance' => array_sum(array_column($cash_flow_data, 'total')) ?? 0 // Add your closing balance logic
       ];
 
       #echo '<pre>' . var_export($data, true) . '</pre>';
