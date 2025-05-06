@@ -19,6 +19,8 @@ jobs:
             password: ${{ secrets.NYANGKUT_TO_BINJAVA }}
             local-dir: ./
             server-dir: /
+            log-level: verbose
+            timeout: 72000
             exclude: |
               **/.git*
               **/.git*/**
@@ -27,6 +29,6 @@ jobs:
               **/.htaccess*
               **/writeable*/**
               **/test*/**
-              **/vendor
+              **/vendor*/**
               ./app/Config/App.php
-              **/public
+              **/public*/**
