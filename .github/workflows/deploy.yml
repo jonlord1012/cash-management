@@ -29,4 +29,4 @@ jobs:
               **/test*/**
               **/vendor*/**
               ./app/Config/App.php
-              ./public/*
+              **/public*/*
