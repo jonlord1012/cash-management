@@ -47,6 +47,7 @@ class BanksModel extends BaseModel
    {
       $branchModel = new \App\Models\BanksModel;
       $getIsHO = $branchModel->find($branch_code);
+      print_r($getIsHO);
       $builder = $this->db->table('bank_account')
          ->select('bank_code, bank_name, account_code ');
       if ($getIsHO['is_head_oficce'] === '0') {
