@@ -153,7 +153,7 @@ class Transaction extends BaseController
       $coaModel = new CoaModel();
       $coaList = $coaModel->getAutocompleteData();
       $bankModel = new BanksModel();
-      $sourceList = $bankModel->getAutocompleteData($this->branchCode);
+      $sourceList = $bankModel->getAutocompleteData($branch_code);
       $data = [
          'title' => 'Input Transaction ' . $branch_name,
          'refNo' => $refNo,
