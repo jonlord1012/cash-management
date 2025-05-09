@@ -48,9 +48,10 @@ class BanksModel extends BaseModel
       $branchModel = new \App\Models\BanksModel;
       $getIsHO = $branchModel->find($branch_code);
       $getIsHO['is_head_office'] ?? '0';
+      $isHo = $getIsHO['is_head_office'] ?? '0';
       $builder = $this->db->table('bank_account')
          ->select('bank_code, bank_name, account_code ');
-      if ($getIsHO['is_head_oficce'] === '0') {
+      if ($isHo <> '1') {
          $results = $builder->groupStart()
             ->where('branch_code', $branch_code)
             ->groupEnd()
