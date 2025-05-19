@@ -66,13 +66,13 @@
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+               <a href="<?= site_url('reports/aktiva_pembangunan') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Aktiva Dalam Pembangunan</p>
                </a>
             </li>
             <li class="nav-item">
-               <a href="<?= site_url('hutang_bank') ?>" class="nav-link">
+               <a href="<?= site_url('reports/kas_hutang_jangka_panjang') ?>" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Kas Hutang Jangka Panjang</p>
                </a>
